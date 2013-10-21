@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Good Deed Marathon</title> 
+
+        <meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="msapplication-tap-highlight" content="no">
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="phonegap.js"></script>
+        <script src="cdv-plugin-fb-connect.js"></script>
+        <script src="facebook-js-sdk.js"></script>
+        <script src="SocialSharing.js"></script>
+
+
+    </head>
+    <body>
+        <button onclick="share()">Share</button>
+
+        <script>
+            function share() {
+                window.plugins.socialsharing.available(function(isAvailable) {
+                    if (isAvailable) {
+
+                        window.plugins.socialsharing.share('Blah Blah Blah', 'Good Deed Marathon', 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/c11.11.160.160/197777_374185282702856_585436714_n.png');
+                    }
+                });
+            }
+        </script>
+    </body>
+
+</html>

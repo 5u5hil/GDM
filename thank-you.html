@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Good Deed Marathon</title> 
+
+        <meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="msapplication-tap-highlight" content="no">
+        <script type="text/javascript" src="js/main.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="phonegap.js"></script>
+        <script src="cdv-plugin-fb-connect.js"></script>
+        
+        <script src="facebook-js-sdk.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/docs.css" />
+		<link type="text/css" rel="stylesheet" href="css/mmenu.css" />
+        <link rel="stylesheet" href="chui/chui.android-3.0.4.min.css">
+        <script src="chui/chocolatechip-3.0.4.min.js"></script>
+        <script src="chui/chui-3.0.4.min.js"></script>
+        <script src="jquery.iframeResizer.min.js"></script>
+<script type="application/javascript">
+$('iframe').iFrameSizer({
+log: false,
+contentWindowBodyMargin:0,
+doHeight:true,
+doWidth:false,
+interval:250,
+});
+</script>
+
+        <link type="text/css" rel="stylesheet" href="menu/mmenu.css" />
+        <script type="text/javascript" src="menu/jquery.mmenu.min.js"></script>
+                		
+
+        <script>
+               $(function() {
+	       $('nav#menu').mmenu({
+              dragOpen: true
+           });
+		});
+            $(document).ready(function() {
+                $("#formm").submit(function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: "http://flyingcursor.com/GoodDeedMarathon/submit.php",
+                        type: "POST",
+                        data: $("#formm").serialize(),
+                        success: function(data) {
+                            var cont = data.split("==");
+                            window.localStorage.setItem("city", cont[0]);
+                            window.localStorage.setItem("state", cont[1]);
+                            window.localStorage.setItem("phone", cont[2]);
+                            window.localStorage.setItem("pin", cont[3]);
+                            window.localStorage.setItem("address", cont[4]);
+                            window.location.href = "thank-you.html";
+                        }
+                    });
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+            <div id="main">
+		<div id="page">
+			<div id="header" style="background-color: #69be28;">
+				<a href="#menu" style="padding-top: 14px;"></a>
+				        <img src="images/gdmnavlogo.png" height="27" width="86" style="padding-top: 15px;">
+			</div><center>
+			<h1 style="color:#69be28"> Thank you </h1></center>
+        <div id="log"></div>
+        <nav id="menu">
+				<ul>
+					<li><a href="page.html">Gallery</a></li>
+					<li class="Selected"><a href="mainmenu.html">About</a></li>
+					<li><a href="submenus.html">Uploads</a></li>
+					<li><a href="labels.html"></a></li>
+	
+				</ul>
+			</nav>
+		</div>
+        </div>
+
+    </body>
+</html>

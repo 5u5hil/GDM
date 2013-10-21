@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.phonegap.example"
+        versionCode="10" 
+        version   = "1.0.0">
+    
+    <!-- versionCode is optional and Android only -->
+
+    <name>Good Deed Marathon</name>
+
+    <description>
+        Mumbai shows it's heart! 
+    </description>
+
+    <author href="http://www.sushil-s.com/" email="sushil.sud@gmail.com">
+        Sushil Sudhakaran 
+    </author>
+    
+    <access origin="*"/>
+    <content src="index.html" />
+
+    <gap:plugin name="com.phonegap.plugins.facebookconnect">
+        <param name="APP_ID" value="622986024390860" />
+        <param name="APP_NAME" value="Good Deed Marathon" />
+    </gap:plugin>
+    
+    <gap:splash src="splash.jpg" />
+    
+    <gap:plugin name="nl.x-services.plugins.socialsharing" />
+
+    <icon src="icon.png" />
+</widget>

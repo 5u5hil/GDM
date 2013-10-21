@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Good Deed Marathon</title> 
+
+        <meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="msapplication-tap-highlight" content="no">
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="phonegap.js"></script>
+        <script src="cdv-plugin-fb-connect.js"></script>
+        <script src="facebook-js-sdk.js"></script>
+
+         <script>
+            $(document).ready(function() {
+                $('nav#menu').mmenu();
+                $("#formm").submit(function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: "http://flyingcursor.com/GoodDeedMarathon/submit.php",
+                        type: "POST",
+                        data: $("#formm").serialize(),
+                        success: function(data) {
+                            var cont = data.split("==");
+                            window.localStorage.setItem("city", cont[0]);
+                            window.localStorage.setItem("state", cont[1]);
+                            window.localStorage.setItem("phone", cont[2]);
+                            window.localStorage.setItem("pin", cont[3]);
+                            window.localStorage.setItem("address", cont[4]);
+                            window.location.href = "thank-you.html";
+                        }
+                    });
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <div id="header">
+            <a href="#menu"></a>
+            Examples
+        </div>
+        <div class="blahhh1">
+            <button id="logginn" onclick="login();"><img src="fbutton.png" /></button>
+            <!--        <button onclick="facebookWallPost()">Share</button>-->
+            <div id="data">loading ...</div>
+
+            <div id="formie" style="display: none;">
+                <form id="formm">
+                    <input type="text" placeholder="Full Name*" name="name" id="name" class="text" />
+                    <input type="email" placeholder="Email ID*" name="email" id="email" class="text" />
+                    <input type="text" name="dob" placeholder="Date of Birth*" id="dob" class="text" />
+                    <input type="text" name="gender" placeholder="Gender*" id="gender" class="text" />
+                    <input type="text" name="city" id="city" placeholder="City*" class="text" />
+                    <input type="text" name="state" id="state" placeholder="State*" class="text" /> 
+                    <input type="text" name="pin" id="pin" placeholder="Zip Code*" class="text" />
+                    <input type="text" name="phn" id="phn" placeholder="Mobile Number*" class="text" />
+                    <input type="hidden" name="prof_id" id="prof_id" />
+                    <textarea name="address" id="address" placeholder="Full Address*"></textarea>
+                    <input type="submit" name="submit" value="SUBMIT" />
+                </form>
+            </div>
+        </div>
+        <a href="share.html">share</a>
+        <div class="blahhh" style="display: none;">
+            <nav id="menu">
+                <ul>
+                    <li><a href="page.html">Gallery</a></li>
+                    <li class="Selected"><a href="mainmenu.html">About</a></li>
+                    <li><a href="submenus.html">Uploads</a></li>
+                    <li><a href="labels.html"></a></li>
+
+                </ul>
+            </nav>
+            <a href="upload_image.html">Submit A Good Deed!!!</a>
+        </div>
+        <div id="fb-root"></div>
+        <script>
+            function login() {
+                FB.login(
+                        function(response) {
+
+                            FB.api('/me', function(response) {
+                                if (response.error) {
+                                    alert(JSON.stringify(response.error));
+                                } else {
+                                    window.localStorage.setItem("id", response.id);
+                                    window.localStorage.setItem("name", response.name);
+                                    window.localStorage.setItem("email", response.email);
+                                    window.localStorage.setItem("birthday", response.birthday);
+                                    window.localStorage.setItem("gender", response.gender);
+                                    switchie();
+                                }
+                            });
+                        },
+                        {scope: "email,user_birthday,publish_actions"}
+                );
+            }
+
+
+            function facebookWallPost() {
+                console.log('Debug 1');
+                var params = {
+                    method: 'feed',
+                    name: 'Facebook Dialogs',
+                    link: 'https://developers.facebook.com/docs/reference/dialogs/',
+                    picture: 'http://fbrell.com/f8.jpg',
+                    caption: 'Reference Documentation',
+                    description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+                };
+                console.log(params);
+                FB.ui(params, function(obj) {
+                    console.log(obj);
+                });
+            }
+
+
+            document.addEventListener('deviceready', function() {
+                try {
+                    FB.init({appId: "622986024390860", nativeInterface: CDV.FB, useCachedDialogs: false});
+                    document.getElementById('data').innerHTML = "";
+                } catch (e) {
+                    alert(e);
+                }
+                if (window.localStorage.getItem("city") != null && window.localStorage.getItem("state") != null && window.localStorage.getItem("phone") != null && window.localStorage.getItem("pin") != null && window.localStorage.getItem("address") != null && window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null && window.localStorage.getItem("birthday") != null) {
+                    $(".blahhh1").hide();
+                    $(".blahhh").show();
+                } else if (window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null && window.localStorage.getItem("birthday") != null) {
+                    switchie();
+                }
+
+            }, false);
+            function switchie() {
+                $("#prof_id").val(window.localStorage.getItem("id"));
+                $("#name").val(window.localStorage.getItem("name"));
+                $("#email").val(window.localStorage.getItem("email"));
+                $("#dob").val(window.localStorage.getItem("birthday"));
+                $("#gender").val(window.localStorage.getItem("gender"));
+                $("#logginn").hide();
+                $("#formie").show();
+            }
+        </script>
+        <div id="log"></div>
+    </body>
+</html>
