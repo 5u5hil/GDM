@@ -16,7 +16,10 @@
     <author href="http://www.sushil-s.com/" email="sushil.sud@gmail.com">
         Sushil Sudhakaran 
     </author>
+    
     <preference name="phonegap-version" value="3.0.0" />
+    <preference name="fullscreen" value="true" />
+
     <access origin="*"/>
     <content src="index.html" />
     
