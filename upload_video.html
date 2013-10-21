@@ -4,16 +4,13 @@
     <title>Capture Video</title>
 
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-    <script type="text/javascript" charset="utf-8" src="json2.js"></script>
     <script>
 
     // Called when capture operation is finished
     //
     function captureSuccess(mediaFiles) {
-        var i, len;
-        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-            uploadFile(mediaFiles[i]);
-        }       
+            uploadFile(mediaFiles);
+               
     }
 
     // Called if something bad happens.
@@ -38,7 +35,7 @@
             name = mediaFile.name;
 
         ft.upload(path,
-            "http://my.domain.com/upload.php",
+            "http://flyingcursor.com/GoodDeedMarathon/upload.php",
             function(result) {
                 alert('Upload success: ' + result.responseCode);
                 alert(result.bytesSent + ' bytes sent');
