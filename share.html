@@ -13,21 +13,14 @@
         <script src="phonegap.js"></script>
         <script src="cdv-plugin-fb-connect.js"></script>
         <script src="facebook-js-sdk.js"></script>
-        <script src="SocialSharing.js"></script>
+        <script src="js/plugins/SocialSharing.js"></script>
 
 
     </head>
     <body>
-        <button onclick="share();">Share</button>
+        <button onclick="window.plugins.socialsharing.share('Message, subject, image and link', 'The subject', 'https://www.google.nl/images/srpr/logo4w.png', 'http://www.x-services.nl')">Share</button>
 
-        <script>
-            function share() {
-alert("blah");
-
-                window.plugins.socialsharing.share('Blah Blah Blah', 'Good Deed Marathon', 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/c11.11.160.160/197777_374185282702856_585436714_n.png');
-
-            }
-        </script>
+       
     </body>
 
 </html>
