@@ -33,7 +33,5 @@
     
     <gap:splash src="splash.jpg" />
     
-    <gap:plugin name="nl.x-services.plugins.socialsharing" />
-
     <icon src="icon.png" />
 </widget>
