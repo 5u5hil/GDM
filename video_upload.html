@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Capture Video</title>
+
+        <title>Good Deed Marathon</title> 
+
+        <meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="msapplication-tap-highlight" content="no">
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="phonegap.js"></script>
+        <script type="text/javascript" charset="utf-8" src="json2.js"></script>
+        <script>
+
+            // Called when capture operation is finished
+            //
+            function captureSuccess(mediaFiles) {
+                var i, len;
+                for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+                    uploadFile(mediaFiles[i]);
+                }
+            }
+
+            // Called if something bad happens.
+            //
+            function captureError(error) {
+                var msg = 'An error occurred during capture: ' + error.code;
+                navigator.notification.alert(msg, null, 'Uh oh!');
+            }
+
+            // A button will call this function
+            //
+            function captureVideo() {
+                // Launch device video recording application,
+                // allowing user to capture up to 2 video clips
+                navigator.device.capture.captureVideo(captureSuccess, captureError, {duration: 10});
+            }
+
+            // Upload files to server
+            function uploadFile(mediaFile) {
+                var ft = new FileTransfer(),
+                        path = mediaFile.fullPath,
+                        name = mediaFile.name;
+
+                ft.upload(path,
+                        "https://flyingcursor.com/GoodDeedMarathon/upload.php",
+                        function(result) {
+                            console.log('Upload success: ' + result.responseCode);
+                            console.log(result.bytesSent + ' bytes sent');
+                        },
+                        function(error) {
+                            console.log('Error uploading file ' + path + ': ' + error.code);
+                        },
+                        {fileName: name});
+            }
+
+        </script>
+    </head>
+    <body>
+        <button onclick="captureVideo();">Capture Video</button> <br>
+    </body>
+</html>
