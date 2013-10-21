@@ -18,16 +18,14 @@
 
     </head>
     <body>
-        <button onclick="share()">Share</button>
+        <button onclick="share();">Share</button>
 
         <script>
             function share() {
-                window.plugins.socialsharing.available(function(isAvailable) {
-                    if (isAvailable) {
 
-                        window.plugins.socialsharing.share('Blah Blah Blah', 'Good Deed Marathon', 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/c11.11.160.160/197777_374185282702856_585436714_n.png');
-                    }
-                });
+
+                window.plugins.socialsharing.share('Blah Blah Blah', 'Good Deed Marathon', 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/c11.11.160.160/197777_374185282702856_585436714_n.png');
+
             }
         </script>
     </body>
