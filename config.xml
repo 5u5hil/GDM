@@ -26,13 +26,6 @@
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
-    <gap:plugin name="org.apache.cordova.camera" />
-    <gap:plugin name="org.apache.cordova.media-capture" />
-    <gap:plugin name="org.apache.cordova.file" />
-    <gap:plugin name="org.apache.cordova.file-transfer" />
-    <gap:plugin name="org.apache.cordova.audiohandler" />
-    <gap:plugin name="org.apache.cordova.media" />
-
     <gap:plugin name="com.phonegap.plugins.facebookconnect">
         <param name="APP_ID" value="622986024390860" />
         <param name="APP_NAME" value="Good Deed Marathon" />
