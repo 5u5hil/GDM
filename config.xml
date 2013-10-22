@@ -1,15 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<widget id="com.standardchartered.gooddeedmarathon" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Good Deed Marathon</name>
-    <description>
-        Mumbai shows it's heart! 
-    </description>
-    <author email="sushil.sud@gmail.com" href="http://www.sushil-s.com/">
-        Sushil Sudhakaran 
-    </author>
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets" xmlns:gap = "http://phonegap.com/ns/1.0" id = "com.standardchartered.gooddeedmarathon" versionCode = "10" version = "1.0.0">
 
-    <gap:plugin name="org.apache.cordova.core.network-information" />
-    <gap:plugin name="org.apache.cordova.core.dialogs" />
+
+    <name>Good Deed Marathon</name>
+
+    <description>Mumbai shows it's heart!</description>
+
+    <author href="http://www.sushil-s.com/" email="sushil.sud@gmail.com">Sushil Sudhakaran</author>
+    
     <gap:plugin name="org.apache.cordova.core.inappbrowser" />
     <gap:plugin name="org.apache.cordova.core.camera" />
     <gap:plugin name="org.apache.cordova.core.file" />
@@ -19,33 +17,24 @@
     <gap:plugin name="org.apache.cordova.core.media" />
     <gap:plugin name="org.apache.cordova.core.media-capture" />
     
-    <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.0.0" />
-    <preference name="orientation" value="default" />
-    <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
-    <preference name="webviewbounce" value="true" />
-    <preference name="prerendered-icon" value="true" />
-    <preference name="stay-in-webview" value="false" />
-    <preference name="ios-statusbarstyle" value="black-opaque" />
-    <preference name="detect-data-types" value="true" />
-    <preference name="exit-on-suspend" value="false" />
-    <preference name="show-splash-screen-spinner" value="true" />
-    <preference name="auto-hide-splash-screen" value="true" />
-    <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
-    <preference name="android-installLocation" value="auto" />
+
+    <access origin="*"/>
+    <content src="index.html" />
     
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+  
+
     <gap:plugin name="com.phonegap.plugins.facebookconnect">
         <param name="APP_ID" value="622986024390860" />
         <param name="APP_NAME" value="Good Deed Marathon" />
     </gap:plugin>
-
+    
+    <gap:splash src="splash.jpg" />
+    
     <icon src="icon.png" />
     
 
-    <gap:splash src="splash.png" />
-  
-
-    <access origin="*" />
 </widget>
