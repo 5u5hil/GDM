@@ -14,11 +14,7 @@
     <gap:plugin name="org.apache.cordova.core.camera" />
     <gap:plugin name="org.apache.cordova.core.file" />
     <gap:plugin name="org.apache.cordova.core.file-transfer" />
-    <gap:plugin name="org.apache.cordova.core.device-orientation" />
-    <gap:plugin name="org.apache.cordova.core.dialogs" />
-    <gap:plugin name="org.apache.cordova.core.media" />
-    <gap:plugin name="org.apache.cordova.core.audiohandler" />
-    <gap:plugin name="org.apache.cordova.core.media-capture" />
+
     
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.0.0" />
