@@ -26,12 +26,12 @@
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
-    <gap:plugin name="org.apache.cordova.camera" />
-    <gap:plugin name="org.apache.cordova.media-capture" />
-    <gap:plugin name="org.apache.cordova.file" />
-    <gap:plugin name="org.apache.cordova.file-transfer" />
-    <gap:plugin name="org.apache.cordova.audiohandler" />
-    <gap:plugin name="org.apache.cordova.media" />
+    <gap:plugin name="org.apache.cordova.core.camera" />
+    <gap:plugin name="org.apache.cordova.core.media-capture" />
+    <gap:plugin name="org.apache.cordova.core.file" />
+    <gap:plugin name="org.apache.cordova.core.file-transfer" />
+    <gap:plugin name="org.apache.cordova.core.audiohandler" />
+    <gap:plugin name="org.apache.cordova.core.media" />
 
     
 <gap:plugin name="com.phonegap.plugins.facebookconnect">
