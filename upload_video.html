@@ -1,54 +1,123 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-  <head>
-    <title>Capture Video</title>
-
-    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-    <script>
-
-    // Called when capture operation is finished
-    //
-    function captureSuccess(mediaFiles) {
-            uploadFile(mediaFiles);
-               
-    }
-
-    // Called if something bad happens.
-    // 
-    function captureError(error) {
-        var msg = 'An error occurred during capture: ' + error.code;
-        navigator.notification.alert(msg, null, 'Uh oh!');
-    }
-
-    // A button will call this function
-    //
-    function captureVideo() {
-        // Launch device video recording application, 
-        // allowing user to capture up to 2 video clips
-        navigator.device.capture.captureVideo(captureSuccess, captureError, {duration : 15});
-    }
-
-    // Upload files to server
-    function uploadFile(mediaFile) {
-        var ft = new FileTransfer(),
-            path = mediaFile.fullPath,
-            name = mediaFile.name;
-
-        ft.upload(path,
-            "http://flyingcursor.com/GoodDeedMarathon/upload.php",
-            function(result) {
-                alert('Upload success: ' + result.responseCode);
-                alert(result.bytesSent + ' bytes sent');
-            },
-            function(error) {
-                alert('Error uploading file ' + path + ': ' + error.code);
-            },
-            { fileName: name });   
-    }
-
-    </script>
+    <head>
+        <title>Capture</title>
     </head>
     <body>
-        <button onclick="captureVideo();">Capture Video</button> <br>
+        <!---------------------------------- Capture ------------------------------------------>
+        <div  id="captureMainPage">
+            <div data-role="header">
+                <h1>Capture</h1>
+            </div>
+            <div data-role="content">
+                <ul id="captureControl" data-role="listview" data-inset="true">
+                    <li><a href="#" id="captureAudioButton">Capture Audio</a></li>
+                    <li><a href="#" id="captureImageButton">Capture Image</a></li>
+                    <li><a href="#" id="captureVideoButton">Capture Video</a></li>              
+                </ul>
+                <div id="captureProperties" class="mesgBox ui-grid-a" style="display:none"></div>
+            </div>
+            <div data-role="footer">
+                <div id="captureStatus"></div>
+            </div>
+
+            <script type="text/javascript" charset="utf-8" src="js/capture-min.js"></script>    
+        </div>
+        <script>
+
+            function updateCaptureStatus(status) {
+                $("#captureStatus").html(status);
+            }
+
+            function clearDisplayStatus() {
+                $("#captureProperties").css("display", "none");
+                $("#captureProperties").empty();
+                $("#captureStatus").empty();
+            }
+
+            function goCapture(captureType) {
+                $("#captureProperties").append("Capture - " + captureType + "");
+
+                function captureSuccess(mediaFiles) {
+                    var i, len;
+                    var mediaDetails = "";
+
+                    for (i = 0, len = mediaFiles.length; i < len; i++) {
+                        mediaDetails += addGridRow("a", boldLabel("File full path:"));
+                        mediaDetails += addGridRow("b", textFormat(mediaFiles[i].fullPath));
+
+                        mediaDetails += addGridRow("a", boldLabel("Type:"));
+                        mediaDetails += addGridRow("b", textFormat(mediaFiles[i].type));
+
+                        mediaDetails += addGridRow("a", boldLabel("Last modified:"));
+                        mediaDetails += addGridRow("b", toDateStr(new Date(mediaFiles[i].lastModifiedDate)));
+
+                        mediaDetails += addGridRow("a", boldLabel("Size:"));
+                        mediaDetails += addGridRow("b", textFormat(mediaFiles[i].size));
+                    }
+                    $("#captureProperties").css("display", "block");
+                    //$("#captureProperties").append(mediaDetails).trigger("create");
+                    $("#captureProperties").html(mediaDetails);
+
+                    updateCaptureStatus("SUCCESS: " + captureType.slice(0, 1).toUpperCase() + captureType.slice(1) + " captured");
+                }
+
+                function captureError(error) {
+                    var errors = {};
+                    errors[CaptureError.CAPTURE_INTERNAL_ERR] = 'Camera or microphone failed to capture image or sound.';
+                    errors[CaptureError.CAPTURE_APPLICATION_BUSY] = 'Camera application or audio capture application is currently serving other capture request.';
+                    errors[CaptureError.CAPTURE_INVALID_ARGUMENT] = 'Invalid use of the API (e.g. limit parameter has value less than one).';
+                    errors[CaptureError.CAPTURE_NO_MEDIA_FILES] = 'User exited camera application or audio capture application before capturing anything.';
+                    errors[CaptureError.CAPTURE_NOT_SUPPORTED] = 'The requested capture operation is not supported.';
+
+                    var contents = addGridRow("a", boldLabel("ERROR:"));
+                    contents += addGridRow("b", errors[error.code]);
+
+                    $("#captureProperties").css("display", "block");
+                    $("#captureProperties").html(contents);
+
+                    updateCaptureStatus("ERROR");
+                }
+
+                clearDisplayStatus();
+                switch (captureType) {
+                    case "audio":
+                        navigator.device.capture.captureAudio(captureSuccess, captureError);
+                        break;
+                    case "image":
+                        navigator.device.capture.captureImage(captureSuccess, captureError);
+                        break;
+                    case "video":
+                        navigator.device.capture.captureVideo(captureSuccess, captureError,{duration:15});
+                        break;
+                }
+            }
+
+            function getCaptureReady() {
+                clearDisplayStatus();
+                $("#captureAudioButton").on('vclick', function(e) {
+                    e.preventDefault();
+                    goCapture('audio');
+                    return false;
+                });
+                $("#captureImageButton").on('vclick', function(e) {
+                    e.preventDefault();
+                    goCapture('image');
+                    return false;
+                });
+                $("#captureVideoButton").on('vclick', function(e) {
+                    e.preventDefault();
+                    goCapture('video');
+                    return false;
+                });
+            }
+
+            //*********************************************************    
+            // initialize the environment
+            //*********************************************************     
+            $("#captureMainPage").bind("pagebeforeshow", function() {
+                getCaptureReady();
+            });
+        </script>
     </body>
 </html>
