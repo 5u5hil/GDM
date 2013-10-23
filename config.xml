@@ -7,7 +7,7 @@
     <description>Mumbai shows it's heart!</description>
 
     <author href="http://www.sushil-s.com/" email="sushil.sud@gmail.com">Sushil Sudhakaran</author>
-    <!--
+ 
     <gap:plugin name="org.apache.cordova.core.inappbrowser" />
     <gap:plugin name="org.apache.cordova.core.camera" />
     <gap:plugin name="org.apache.cordova.core.file" />
@@ -16,23 +16,21 @@
     <gap:plugin name="org.apache.cordova.core.dialogs" />
     <gap:plugin name="org.apache.cordova.core.media" version="0.2.4" />
     <gap:plugin name="org.apache.cordova.core.media-capture" version="0.2.3" />
-    -->
-    <preference name="phonegap-version" value="3.1.0" />
+   
     <preference name="fullscreen" value="true" />
 
     <access origin="*"/>
     <content src="index.html" />
     
 
-    <gap:platform name="android" />
-  
+    <gap:platform name="android" /> 
 
     <gap:plugin name="com.phonegap.plugins.facebookconnect">
         <param name="APP_ID" value="622986024390860" />
         <param name="APP_NAME" value="Good Deed Marathon" />
     </gap:plugin>
     
-    <gap:splash src="splash.jpg" />
+    <gap:splash src="splash.png" />
     
     <icon src="icon.png" />
     
