@@ -10,6 +10,7 @@
         <meta name="msapplication-tap-highlight" content="no">
 
         <link rel="stylesheet" type="text/css" href="style.css" >
+        <link href="css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
 
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>   
@@ -17,6 +18,7 @@
         <script src="phonegap.js"></script>
         <script src="cdv-plugin-fb-connect.js"></script>
         <script src="facebook-js-sdk.js"></script>
+        <script src="js/jquery.mCustomScrollbar.min.js"></script>
     </head>
     <body>
         <div id="st-container" class="st-container">
@@ -48,8 +50,7 @@
                                     See for yourself.
                                 </p>
                                 <div style="height: 30px;"></div>
-                                <div style="width: 300px; height: 225px; margin: 0 auto;">
-                                    <iframe width="300" height="225" src="http://www.youtube.com/embed/bC47NhozqG4" frameborder="0" ></iframe>
+                                <div class='youtubeGallery' style="width: 300px; height: 225px; margin: 0 auto;">
                                 </div>
                                 <div id="logginn">
                                     <p class="color-blue">
@@ -59,6 +60,11 @@
                                 </div>
                             </div>       
                             <div id="formie" style="display: none;">
+                                <p class="color-blue">
+                                    We just need a few more details. <br />
+                                    Fill them in & you can share your good deeds with everyone <br />
+                                    and see Mumbai dazzle!
+                                </p>
                                 <form id="formm">
                                     <input type="text" placeholder="Full Name*" name="name" id="name" class="text" />
                                     <input type="email" placeholder="Email ID*" name="email" id="email" class="text" />
@@ -69,8 +75,8 @@
                                     <input type="text" name="pin" id="pin" placeholder="Zip Code*" class="text" />
                                     <input type="text" name="phn" id="phn" placeholder="Mobile Number*" class="text" />
                                     <input type="hidden" name="prof_id" id="prof_id" />
-                                    <textarea name="address" id="address" placeholder="Full Address*"></textarea>
-                                    <input type="submit" id="submitie" name="submit" value="SUBMIT" />
+                                    <textarea name="address" id="address"  class="text" placeholder="Full Address*"></textarea>
+                                    <input type="image" src="images/submit.jpg" id="submitie" />
                                 </form>
                             </div>
                             <img class="home_sc_logo" src="images/sc_logo.png" width="300" height="104" />
@@ -84,6 +90,19 @@
         <script src="js/sidebarEffects.js"></script>
         <script>
                                         $(document).ready(function() {
+                                            $.ajax({
+                                                url: "http://www.gooddeedmarathon.com/getYoutubeVideo.php",
+                                                success: function(data) {
+                                                    $(".youtubeGallery .mCSB_container").html(data); //load new content inside .mCSB_container
+                                                    $(".youtubeGallery").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
+                                                    $(".youtubeGallery").mCustomScrollbar("scrollTo", "top", {scrollInertia: 200}); //scroll to top
+                                                }
+                                            });
+                                            $(".youtubeGallery").mCustomScrollbar({
+                                                scrollButtons: {
+                                                    enable: true
+                                                }
+                                            });
                                             $("#submitie").click(function(e) {
                                                 e.preventDefault();
                                                 $.ajax({
@@ -111,7 +130,7 @@
 
                             FB.api('/me', function(response) {
                                 if (response.error) {
-                                    alert(JSON.stringify(response.error));
+                                    //alert(JSON.stringify(response.error));
                                 } else {
                                     window.localStorage.setItem("id", response.id);
                                     window.localStorage.setItem("name", response.name);
@@ -132,7 +151,7 @@
                     FB.init({appId: "622986024390860", nativeInterface: CDV.FB, useCachedDialogs: false});
                     document.getElementById('data').innerHTML = "";
                 } catch (e) {
-                    alert(e);
+                    //   alert(e);
                 }
                 if (window.localStorage.getItem("city") != null && window.localStorage.getItem("state") != null && window.localStorage.getItem("phone") != null && window.localStorage.getItem("pin") != null && window.localStorage.getItem("address") != null && window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null && window.localStorage.getItem("birthday") != null) {
                     $("#logginn").hide();
