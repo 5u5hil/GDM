@@ -39,8 +39,12 @@
                             <p style="text-align: center; margin: 0; padding: 0;"><img src="images/gdm_logo.png" width="129" height="50" /></p>
                         </header>
                         <div id="home" class="content center-align">
-                            <img src="images/info.jpg" style="width: 100%" />
-                            <a href="thankyou.html"><img src="images/next.jpg" /></a>
+                              <p class="color-blue">
+                                  Thank you <span class="namie"></span>! <br />
+                                   You're now officially part of the
+                                   
+                                </p>
+                                <img src="images/thankyou-main.png" style="width: 100%" />
                             <img class="home_sc_logo" src="images/sc_logo.png" width="300" height="104" />
                         </div><!--home ends here-->
                     </div><!--st-content-inner ends here-->
@@ -49,5 +53,10 @@
         </div><!--st-container ends here-->
         <script src="js/classie.js"></script>
         <script src="js/sidebarEffects.js"></script>
+        <script>
+            $(document).ready(function(){
+               $(".namie").text(window.localStorage.getItem("name"));
+            });
+        </script>
     </body>
 </html>
