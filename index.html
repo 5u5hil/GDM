@@ -55,13 +55,8 @@
                                     window.localStorage.setItem("email", response.email);
                                     window.localStorage.setItem("birthday", response.birthday);
                                     window.localStorage.setItem("gender", response.gender);
-                                    var if_exists = checkie();
-                                    alert(if_exists);
-                                    if (if_exists == 0) {
-                                        switchie();
-                                    } else {
-                                        $("#logginn").hide();
-                                    }
+                                    checkie();
+
                                 }
                             });
                         },
@@ -99,9 +94,9 @@
                     type: "POST",
                     data: {prof_id: window.localStorage.getItem("id")},
                     success: function(data) {
-                        var blah = 1;
+
                         if (data == 0) {
-                            blah = 0;
+                            switchie();
                         } else {
                             var cont = data.split("==");
                             window.localStorage.setItem("city", cont[0]);
@@ -109,10 +104,11 @@
                             window.localStorage.setItem("phone", cont[2]);
                             window.localStorage.setItem("pin", cont[3]);
                             window.localStorage.setItem("address", cont[4]);
+                            $("#logginn").hide();
                         }
                     }
                 });
-                return blah;
+
             }
         </script>
     </head>
@@ -147,7 +143,7 @@
                                 </p>
                                 <div style="height: 30px;"></div>
                                 <div style="width: 300px; height: 225px; margin: 0 auto;">
-                                    <iframe width="300" height="225" src="http://www.youtube.com/embed/bC47NhozqG4" frameborder="0" allowfullscreen></iframe>
+                                    <iframe width="300" height="225" src="http://www.youtube.com/embed/bC47NhozqG4" frameborder="0" allowfullscreen ></iframe>
                                 </div>
                                 <p class="color-blue">
                                     Connect with Facebook to join in.
