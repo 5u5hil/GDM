@@ -17,7 +17,7 @@
     <gap:plugin name="org.apache.cordova.core.media" version="0.2.4" />
     <gap:plugin name="org.apache.cordova.core.media-capture" version="0.2.3" />-->
 
-    <preference name="phonegap-version" value="2.9.0" />
+    <preference name="phonegap-version" value="3.1.0" />
     <preference name="fullscreen" value="true" />
 
     <access origin="*"/>
@@ -25,6 +25,17 @@
     
 
     <gap:platform name="android" />
+    
+     <gap:plugin name="org.apache.cordova.core.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.core.camera" />
+    <gap:plugin name="org.apache.cordova.core.file" />
+    <gap:plugin name="org.apache.cordova.core.file-transfer" />
+    <gap:plugin name="org.apache.cordova.core.device-orientation" />
+    <gap:plugin name="org.apache.cordova.core.dialogs" />
+    <gap:plugin name="org.apache.cordova.core.media" version="0.2.4" />
+    <gap:plugin name="org.apache.cordova.core.media-capture" version="0.2.3" />
+    
+
   
 
     <gap:plugin name="com.phonegap.plugins.facebookconnect">
