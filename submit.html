@@ -10,7 +10,6 @@
         <meta name="msapplication-tap-highlight" content="no">
 
         <link rel="stylesheet" type="text/css" href="style.css" >
-        <link href="css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
 
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>   
@@ -18,70 +17,134 @@
         <script src="phonegap.js"></script>
         <script src="cdv-plugin-fb-connect.js"></script>
         <script src="facebook-js-sdk.js"></script>
-        <script src="js/jquery.mCustomScrollbar.min.js"></script>
-        <script src="js/classie.js"></script>
-        <script src="js/sidebarEffects.js"></script>
+        <script src="js/plugins/SocialSharing.js"></script>
+
         <script>
             $(document).ready(function() {
+                $("#textTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/sub-text_green.png");
 
-                $("#submitie").click(function(e) {
+                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
+                    $("#videoTool img").attr("src", "images/sub-video-white.png");
+                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
+
+                    $(".submitDiv").hide();
+                    $("#textToolSubmit").show();
+                    capturePhoto();
+                });
+
+                $("#photoTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/sub-photo_green.png");
+
+                    $("#textTool img").attr("src", "images/sub-text_white.png");
+                    $("#videoTool img").attr("src", "images/sub-video-white.png");
+                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
+
+                    $(".submitDiv").hide();
+                    $("#photoToolSubmit").show();
+                });
+
+                $("#videoTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/sub-video-green.png");
+
+
+                    $("#textTool img").attr("src", "images/sub-text_white.png");
+                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
+                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
+
+
+                    $(".submitDiv").hide();
+                    $("#videoToolSubmit").show();
+                });
+
+                $("#uploadTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/ty-gallery-icon-green.png");
+
+                    $("#textTool img").attr("src", "images/sub-text_white.png");
+                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
+                    $("#videoTool img").attr("src", "images/sub-video-white.png");
+
+
+                    $(".submitDiv").hide();
+                    $("#uploadToolSubmit").show();
+                });
+
+                $("#textSubmitButton").click(function(e) {
                     e.preventDefault();
-                    $.ajax({
-                        url: "http://flyingcursor.com/GoodDeedMarathon/submit.php",
-                        type: "POST",
-                        data: $("#formm").serialize(),
-                        success: function(data) {
-                            var cont = data.split("==");
-                            window.localStorage.setItem("city", cont[0]);
-                            window.localStorage.setItem("state", cont[1]);
-                            window.localStorage.setItem("phone", cont[2]);
-                            window.localStorage.setItem("pin", cont[3]);
-                            window.localStorage.setItem("address", cont[4]);
-                            window.location.href = "thank-you.html";
-                        }
-                    });
+                    upload($("photosubmit").attr("src"));
                 });
 
             });
-        </script>
-        <script>
-            document.addEventListener('deviceready', function() {
-                if (window.localStorage.getItem("city") != null && window.localStorage.getItem("state") != null && window.localStorage.getItem("phone") != null && window.localStorage.getItem("pin") != null && window.localStorage.getItem("address") != null && window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null && window.localStorage.getItem("birthday") != null) {
-                    window.location.href = "thank-you.html";
-                } else if (window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null && window.localStorage.getItem("birthday") != null) {
-                    switchie();
-                }
 
-            }, false);
+            var pictureSource;   // picture source
+            var destinationType; // sets the format of returned value
 
-            function switchie() {
-                $("#prof_id").val(window.localStorage.getItem("id"));
-                $("#name").val(window.localStorage.getItem("name"));
-                $("#email").val(window.localStorage.getItem("email"));
-                $("#dob").val(window.localStorage.getItem("birthday"));
-                $("#gender").val(window.localStorage.getItem("gender"));
+// Wait for device API libraries to load
+//
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+// device APIs are available
+//
+            function onDeviceReady() {
+                pictureSource = navigator.camera.PictureSourceType;
+                destinationType = navigator.camera.DestinationType;
+            }
+            function capturePhoto() {
+                // Take picture using device camera and retrieve image as base64-encoded string
+                navigator.camera.getPicture(onPhotoDataSuccess, onFail, {quality: 50,
+                    destinationType: destinationType.FILE_URI});
             }
 
-            function  checkie() {
-                $.ajax({
-                    url: "http://flyingcursor.com/GoodDeedMarathon/check.php",
-                    type: "POST",
-                    data: {prof_id: window.localStorage.getItem("id")},
-                    success: function(data) {
+            function onPhotoURISuccess(imageURI) {
+                var largeImage = document.getElementById('photosubmit');
+                largeImage.style.display = 'block';
+                largeImage.src = imageURI;
+            }
 
-                        if (data == 0) {
-                            switchie();
+            function upload(imageURI) {
+
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                var prof_id = window.localStorage.getItem("id");
+                var msg = $("#textToolSubmitForm textarea").val();
+                var imagefilename = userid + "_" + Number(new Date()) + ".jpg";
+                options.fileName = imagefilename;
+                options.mimeType = "image/jpg";
+
+                var params = new Object();
+                params.imageURI = imageURI;
+                params.prof_id = window.localStorage.getItem("id");
+                params.msg = msg;
+                options.params = params;
+                options.chunkedMode = false;
+                var ft = new FileTransfer();
+                var url = "http://www.gooddeedmarathon.com/upload.php";
+
+                var statusDom = document.querySelector('#status');
+                ft.onprogress = function(progressEvent) {
+                    $("#status").show();
+                    if (progressEvent.lengthComputable) {
+                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+                        statusDom.innerHTML = perc + "% loaded...";
+                    } else {
+                        if (statusDom.innerHTML == "") {
+                            statusDom.innerHTML = "Loading";
                         } else {
-                            var cont = data.split("==");
-                            window.localStorage.setItem("city", cont[0]);
-                            window.localStorage.setItem("state", cont[1]);
-                            window.localStorage.setItem("phone", cont[2]);
-                            window.localStorage.setItem("pin", cont[3]);
-                            window.localStorage.setItem("address", cont[4]);
-                            window.location.href = "thank-you.html";
+                            statusDom.innerHTML += ".";
                         }
                     }
-                });
+                };
+                ft.upload(imageURI, url, win, fail, options, true);
+
+
             }
         </script>
     </head>
@@ -106,30 +169,69 @@
                             <p style="text-align: center; margin: 0; padding: 0;"><img src="images/gdm_logo.png" width="129" height="50" /></p>
                         </header>
                         <div id="home" class="content center-align">
-                            <div id="formie">
-                                <p class="color-blue">
-                                    We just need a few more details. <br />
-                                    Fill them in & you can share your good deeds with everyone <br />
-                                    and see Mumbai dazzle!
+                            <p class="color-blue">
+                                Share your good deeds with everyone so they know how awesome you are! <br />
+                                Tell us about them in any way you want.
+                            </p>
+                            <div class="submitModes">
+                                <p id="textTool">Text <br />                                    
+                                    <img src="images/sub-text_white.png" />
                                 </p>
-                                <form id="formm">
-                                    <input type="text" placeholder="Full Name*" name="name" id="name" class="text" />
-                                    <input type="email" placeholder="Email ID*" name="email" id="email" class="text" />
-                                    <input type="hidden" name="dob" id="dob" class="text" />
-                                    <input type="hidden" name="gender" id="gender" class="text" />
-                                    <input type="text" name="city" id="city" placeholder="City*" class="text" value="Mumbai" disabled="disabled"/>
-                                    <input type="text" name="state" id="state" placeholder="State*" class="text"  value="Maharashtra" disabled="disabled"/> 
-                                    <input type="text" name="pin" id="pin" placeholder="Zip Code*" class="text" />
-                                    <input type="text" name="phn" id="phn" placeholder="Mobile Number*" class="text" />
-                                    <input type="hidden" name="prof_id" id="prof_id" />
-                                    <textarea name="address" id="address"  class="text" placeholder="Full Address*"></textarea>
-                                    <input type="image" src="images/submit.jpg" id="submitie" />
+                                <p id="photoTool">Photo <br />
+                                    <img src="images/sub-photo_white.png" />
+                                </p>
+                                <p id="videoTool">Video <br />
+                                    <img src="images/sub-video-white.png" />
+                                </p>
+                                <p id="uploadTool">Upload <br />
+                                    <img src="images/ty-gallery-icon.png" />
+                                </p>
+                            </div>
+
+                            <div id="textToolSubmit" class="submitDiv">
+                                <div id="status" class="color-green"></div>
+                                <form class="textToolSubmitForm" action="" method="post" >
+                                    <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
+                                    <p class="color-blue"><span class="limit">140</span> Characters</p>
+                                    <input type="image" class="textSubmitButton" src="images/submit.jpg" style="margin-top: 20px;" />                             
                                 </form>
                             </div>
+
+                            <div id="photoToolSubmit" class="submitDiv">
+                                <form class="photoToolSubmitForm" method="post" enctype="multipart/form-data">
+                                    <img id="photosubmit" src="images/pic.jpg" style="width:80%;margin-bottom: 20px;" />
+                                    <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
+                                    <p class="color-blue"><span class="limit">140</span> Characters</p>
+                                    <input type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
+                                </form>
+                            </div>
+
+                            <div id="videoToolSubmit" class="submitDiv">
+                                <form class="videoToolSubmitForm" method="post" enctype="multipart/form-data">
+                                    <video style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
+                                        <source src="">
+                                    </video> 
+                                    <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
+                                    <p class="color-blue"><span class="limit">140</span> Characters</p>
+                                    <input type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
+                                </form>
+                            </div>
+
+                            <div id="uploadToolSubmit" class="submitDiv">
+                                <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
+                                    <img src="images/pic.jpg" style="width:80%;margin-bottom: 20px;" />
+                                    <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
+                                    <p class="color-blue"><span class="limit">140</span> Characters</p>
+                                    <input type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
+                                </form>
+                            </div>
+
                         </div><!--home ends here-->
                     </div><!--st-content-inner ends here-->
                 </div><!--.st-content ends here-->
             </div>
         </div><!--st-container ends here-->
+        <script src="js/classie.js"></script>
+        <script src="js/sidebarEffects.js"></script>
     </body>
 </html>

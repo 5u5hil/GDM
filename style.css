@@ -271,13 +271,13 @@ header .left-menu {
 }
 
 .color-green {
-    color: #69be28;
+    color: #69be28 !important;
     font-size: 1em;
     line-height: 1.3;
 }
 
 .color-blue {
-    color: #009fda;
+    color: #009fda !important;
 }
 
 .home_sc_logo {
@@ -319,7 +319,6 @@ hr
     background-image:url('images/line.png');
     width: 90%;
 }
-
 .medium{
     width: 50%;
     float: left;
@@ -330,4 +329,30 @@ hr
 .submitImgs p{
     float: left;
     width: 50%;
+}
+.submitModes p{
+    float: left;
+    width: 25%;
+    color:#fff;
+    cursor: pointer;
+}
+.submitModes p img{
+    width: 80%;
+    margin: 5%;    
+
+}
+.submitDiv{
+    display: none;
+    width: 80%;
+    margin: auto;
+}
+
+.submitDiv textarea{
+    height:100px;
+}
+
+.submitDiv p{
+    font-size: 10px;
+    margin: 0;
+    text-align: left;
 }
