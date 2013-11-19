@@ -19,135 +19,6 @@
         <script src="facebook-js-sdk.js"></script>
         <script src="js/plugins/SocialSharing.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $("#textTool").click(function() {
-                    $(this).siblings("p").removeClass("color-green");
-                    $(this).addClass("color-green");
-                    $(this).children("img").attr("src", "images/sub-text_green.png");
-
-                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
-                    $("#videoTool img").attr("src", "images/sub-video-white.png");
-                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
-                    $(".submitDiv").hide();
-                    capturePhoto();
-
-
-                });
-
-                $("#photoTool").click(function() {
-                    $(this).siblings("p").removeClass("color-green");
-                    $(this).addClass("color-green");
-                    $(this).children("img").attr("src", "images/sub-photo_green.png");
-
-                    $("#textTool img").attr("src", "images/sub-text_white.png");
-                    $("#videoTool img").attr("src", "images/sub-video-white.png");
-                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
-
-                    $(".submitDiv").hide();
-                    $("#photoToolSubmit").show();
-                });
-
-                $("#videoTool").click(function() {
-                    $(this).siblings("p").removeClass("color-green");
-                    $(this).addClass("color-green");
-                    $(this).children("img").attr("src", "images/sub-video-green.png");
-
-
-                    $("#textTool img").attr("src", "images/sub-text_white.png");
-                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
-                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
-
-
-                    $(".submitDiv").hide();
-                    $("#videoToolSubmit").show();
-                });
-
-                $("#uploadTool").click(function() {
-                    $(this).siblings("p").removeClass("color-green");
-                    $(this).addClass("color-green");
-                    $(this).children("img").attr("src", "images/ty-gallery-icon-green.png");
-
-                    $("#textTool img").attr("src", "images/sub-text_white.png");
-                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
-                    $("#videoTool img").attr("src", "images/sub-video-white.png");
-
-
-                    $(".submitDiv").hide();
-                    $("#uploadToolSubmit").show();
-                });
-
-                $("#textSubmitButton").click(function(e) {
-                    e.preventDefault();
-                    upload($("photosubmit").attr("src"));
-                });
-
-            });
-
-            var pictureSource;   // picture source
-            var destinationType; // sets the format of returned value
-
-// Wait for device API libraries to load
-//
-            document.addEventListener("deviceready", onDeviceReady, false);
-
-// device APIs are available
-//
-            function onDeviceReady() {
-                pictureSource = navigator.camera.PictureSourceType;
-                destinationType = navigator.camera.DestinationType;
-            }
-            function capturePhoto() {
-                // Take picture using device camera and retrieve image as base64-encoded string
-                navigator.camera.getPicture(onPhotoURISuccess, onFail, {quality: 50,
-                    destinationType: destinationType.FILE_URI});
-            }
-
-            function onPhotoURISuccess(imageURI) {
-                var largeImage = document.getElementById('photosubmit');
-                largeImage.style.display = 'block';
-                largeImage.src = imageURI;
-                $("#textToolSubmit").show();
-            }
-
-            function upload(imageURI) {
-
-                var options = new FileUploadOptions();
-                options.fileKey = "file";
-                var prof_id = window.localStorage.getItem("id");
-                var msg = $("#textToolSubmitForm textarea").val();
-                var imagefilename = prof_id + "_" + Number(new Date()) + ".jpg";
-                options.fileName = imagefilename;
-                options.mimeType = "image/jpg";
-
-                var params = new Object();
-                params.imageURI = imageURI;
-                params.prof_id = window.localStorage.getItem("id");
-                params.msg = msg;
-                options.params = params;
-                options.chunkedMode = false;
-                var ft = new FileTransfer();
-                var url = "http://www.gooddeedmarathon.com/upload.php";
-
-                var statusDom = document.querySelector('#status');
-                ft.onprogress = function(progressEvent) {
-                    $("#status").show();
-                    if (progressEvent.lengthComputable) {
-                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
-                        statusDom.innerHTML = perc + "% loaded...";
-                    } else {
-                        if (statusDom.innerHTML == "") {
-                            statusDom.innerHTML = "Loading";
-                        } else {
-                            statusDom.innerHTML += ".";
-                        }
-                    }
-                };
-                ft.upload(imageURI, url, win, fail, options, true);
-
-
-            }
-        </script>
     </head>
     <body>
         <div id="st-container" class="st-container">
@@ -234,5 +105,158 @@
         </div><!--st-container ends here-->
         <script src="js/classie.js"></script>
         <script src="js/sidebarEffects.js"></script>
+        <script>
+            var pictureSource;   // picture source
+            var destinationType; // sets the format of returned value
+
+            // Wait for device API libraries to load
+            //
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            // device APIs are available
+            //
+            function onDeviceReady() {
+                pictureSource = navigator.camera.PictureSourceType;
+                destinationType = navigator.camera.DestinationType;
+            }
+
+
+            function onPhotoURISuccess(imageURI) {
+                var largeImage = document.getElementById('photosubmit');
+                largeImage.style.display = 'block';
+                largeImage.src = imageURI;
+                $("#textToolSubmit").show();
+            }
+
+            // A button will call this function
+            //
+            function capturePhoto() {
+                navigator.camera.getPicture(onPhotoURISuccess, onFail, {quality: 50,
+                    destinationType: destinationType.FILE_URI});
+            }
+
+
+            // A button will call this function
+            //
+            function getPhoto(source) {
+                navigator.camera.getPicture(onPhotoURISuccess, onFail, {quality: 50,
+                    destinationType: destinationType.FILE_URI,
+                    sourceType: source});
+            }
+
+            // Called if something bad happens.
+            //
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+
+
+            $(document).ready(function() {
+                $("#textTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/sub-text_green.png");
+
+                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
+                    $("#videoTool img").attr("src", "images/sub-video-white.png");
+                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
+                    $(".submitDiv").hide();
+                    capturePhoto();
+                });
+
+                $("#photoTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/sub-photo_green.png");
+
+                    $("#textTool img").attr("src", "images/sub-text_white.png");
+                    $("#videoTool img").attr("src", "images/sub-video-white.png");
+                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
+
+                    $(".submitDiv").hide();
+                    $("#photoToolSubmit").show();
+                });
+
+                $("#videoTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/sub-video-green.png");
+
+
+                    $("#textTool img").attr("src", "images/sub-text_white.png");
+                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
+                    $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
+
+
+                    $(".submitDiv").hide();
+                    $("#videoToolSubmit").show();
+                });
+
+                $("#uploadTool").click(function() {
+                    $(this).siblings("p").removeClass("color-green");
+                    $(this).addClass("color-green");
+                    $(this).children("img").attr("src", "images/ty-gallery-icon-green.png");
+
+                    $("#textTool img").attr("src", "images/sub-text_white.png");
+                    $("#photoTool img").attr("src", "images/sub-photo_white.png");
+                    $("#videoTool img").attr("src", "images/sub-video-white.png");
+
+
+                    $(".submitDiv").hide();
+                    $("#uploadToolSubmit").show();
+                });
+
+                $("#textSubmitButton").click(function(e) {
+                    e.preventDefault();
+                    upload($("photosubmit").attr("src"));
+                });
+            });
+
+
+            function upload(imageURI) {
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                var prof_id = window.localStorage.getItem("id");
+                var msg = $("#textToolSubmitForm textarea").val();
+                var imagefilename = prof_id + "_" + Number(new Date()) + ".jpg";
+                options.fileName = imagefilename;
+                options.mimeType = "image/jpg";
+
+                var params = new Object();
+                params.imageURI = imageURI;
+                params.prof_id = window.localStorage.getItem("id");
+                params.msg = msg;
+                options.params = params;
+                options.chunkedMode = false;
+                var ft = new FileTransfer();
+                var url = "http://www.gooddeedmarathon.com/upload.php";
+
+                var statusDom = document.querySelector('#status');
+                ft.onprogress = function(progressEvent) {
+                    $("#status").show();
+                    if (progressEvent.lengthComputable) {
+                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+                        statusDom.innerHTML = perc + "% loaded...";
+                    } else {
+                        if (statusDom.innerHTML == "") {
+                            statusDom.innerHTML = "Loading";
+                        } else {
+                            statusDom.innerHTML += ".";
+                        }
+                    }
+                };
+                ft.upload(imageURI, url, win, fail, options, true);
+            }
+
+            function win(r) {
+                $("#status").hide();
+                alert("Image uploaded successfully!!");
+            }
+//Failure callback
+            function fail(error) {
+                alert(error);
+            }
+        </script>
+
     </body>
 </html>
