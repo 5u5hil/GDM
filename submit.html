@@ -115,7 +115,7 @@
                 options.fileKey = "file";
                 var prof_id = window.localStorage.getItem("id");
                 var msg = $("#textToolSubmitForm textarea").val();
-                var imagefilename = userid + "_" + Number(new Date()) + ".jpg";
+                var imagefilename = prof_id + "_" + Number(new Date()) + ".jpg";
                 options.fileName = imagefilename;
                 options.mimeType = "image/jpg";
 
