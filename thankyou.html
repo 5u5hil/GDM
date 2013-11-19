@@ -17,12 +17,13 @@
         <script src="phonegap.js"></script>
         <script src="cdv-plugin-fb-connect.js"></script>
         <script src="facebook-js-sdk.js"></script>
+        <script src="js/plugins/SocialSharing.js"></script>
     </head>
     <body>
         <div id="st-container" class="st-container">
             <nav class="st-menu st-effect-13" id="menu-13">
                 <ul>
-                   <li><a class="icon icon-home" href="index.html">Home</a></li>
+                    <li><a class="icon icon-home" href="index.html">Home</a></li>
                     <li><a class="icon icon-submit" href="submit.html">Submit a Deed</a></li>
                     <li><a class="icon icon-goodDeed" href="gallery.html">Gallery</a></li>
                     <li><a class="icon icon-map" href="map.html">Map</a></li>
@@ -39,12 +40,33 @@
                             <p style="text-align: center; margin: 0; padding: 0;"><img src="images/gdm_logo.png" width="129" height="50" /></p>
                         </header>
                         <div id="home" class="content center-align">
-                              <p class="color-blue">
-                                  Thank you <span class="namie"></span>! <br />
-                                   You're now officially part of the
-                                   
+                            <p class="color-blue">
+                                Thank you <span class="namie"></span>! <br />
+                                You're now officially part of the
+
+                            </p>
+                            <img src="images/thankyou-main.png" style="width: 100%" />
+                            <a href="#" onclick="window.plugins.socialsharing.share('I’m all set to make Mumbai a shiny happy place. Want to join in? Register for the Good Deed Marathon here! ', null, null, 'https://www.facebook.com/StandardCharteredIN/app_622986024390860')">  <img src="images/ty-spread-the-love.png"  style="width: 50%;margin-bottom: 10px;" /> </a>
+                            <hr>
+                            <div class="submitMediums">
+                                <p class="color-blue medium">
+                                    Ever made a difference?
+                                    Ever made someone smile?
+                                    Tell us here!
                                 </p>
-                                <img src="images/thankyou-main.png" style="width: 100%" />
+                                <p class="color-blue medium">
+                                    Check out what 
+                                    the rest of Mumbai has done.
+                                </p>  
+                            </div>
+                            <div class="submitImgs">
+                                <p>                                    
+                                    <a href="submit.html"><img src="images/ty-submit-gdm.png" /></a>
+                                </p>
+                                <p>
+                                    <a href="gallery.html"><img src="images/ty-gallery-icon.png" /></a>
+                                </p>
+                            </div>
                             <img class="home_sc_logo" src="images/sc_logo.png" width="300" height="104" />
                         </div><!--home ends here-->
                     </div><!--st-content-inner ends here-->
@@ -54,8 +76,8 @@
         <script src="js/classie.js"></script>
         <script src="js/sidebarEffects.js"></script>
         <script>
-            $(document).ready(function(){
-               $(".namie").text(window.localStorage.getItem("name"));
+            $(document).ready(function() {
+                $(".namie").text(window.localStorage.getItem("name"));
             });
         </script>
     </body>

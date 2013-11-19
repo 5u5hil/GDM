@@ -22,7 +22,7 @@
         <param name="APP_ID" value="622986024390860" />
         <param name="APP_NAME" value="Good Deed Marathon" />
     </gap:plugin>
-    
+    <gap:plugin name="nl.x-services.plugins.socialsharing" version="2.3" />
     <gap:splash src="splash.png" />
     
     <icon src="icon.png" />

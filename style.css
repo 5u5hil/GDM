@@ -310,3 +310,24 @@ header .left-menu {
 input:-moz-placeholder { color:#fff; font-size: 12px; }
 
 .text ::-webkit-input-placeholder { color:#fff; font-size: 12px; }
+
+hr
+{
+    display:block;
+    border:none;
+    height:1px;
+    background-image:url('images/line.png');
+    width: 90%;
+}
+
+.medium{
+    width: 50%;
+    float: left;
+}
+.submitImgs{
+    clear: both;
+}
+.submitImgs p{
+    float: left;
+    width: 50%;
+}
