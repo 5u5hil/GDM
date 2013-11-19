@@ -80,12 +80,12 @@
 
                             <div id="videoToolSubmit" class="submitDiv">
                                 <form class="videoToolSubmitForm" method="post" enctype="multipart/form-data">
-                                    <video style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
+                                    <video id="videosubmit" style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
                                         <source src="">
                                     </video> 
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
-                                    <input type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
+                                    <input id="videoSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
                                 </form>
                             </div>
 
@@ -128,12 +128,31 @@
                 $("#photoToolSubmit").show();
             }
 
+            function captureSuccess(mediaFiles) {
+                mediaFiles[0].getFormatData(function(data) {
+                    if (data.duration > 15) {
+                        alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
+                    } else {
+                        $("#videosubmit")[0].src = data.fullPath;
+                        $("#videoToolSubmit").show();
+                    }
+                });
+            }
+
             // A button will call this function
             //
             function capturePhoto() {
-                navigator.camera.getPicture(onPhotoURISuccess, onFail, {quality: 50,
-                    destinationType: destinationType.FILE_URI});
+                navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+                    quality: 50,
+                    destinationType: destinationType.FILE_URI,
+                    targetWidth: 640,
+                    targetHeight: 640
+                });
             }
+            function captureVideo() {
+                navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 1, duration: 15});
+            }
+
 
 
             // A button will call this function
@@ -191,7 +210,7 @@
 
 
                     $(".submitDiv").hide();
-                    $("#videoToolSubmit").show();
+                    captureVideo();
                 });
 
                 $("#uploadTool").click(function() {
@@ -211,6 +230,10 @@
                 $("#photoSubmitButton").click(function(e) {
                     e.preventDefault();
                     upload($("#photosubmit").attr("src"));
+                });
+                $("#videoSubmitButton").click(function(e) {
+                    e.preventDefault();
+                    uploadVideo($("#videosubmit")[0].attr("src"));
                 });
             });
 
@@ -248,6 +271,23 @@
                     }
                 };
                 ft.upload(imageURI, url, win, fail, options, true);
+            }
+
+            function uploadVideo(mediaFile) {
+                var ft = new FileTransfer(),
+                        path = mediaFile.fullPath,
+                        name = mediaFile.name;
+
+                ft.upload(path,
+                        "http://flyingcursor.com/GoodDeedMarathon/upload.php",
+                        function(result) {
+                            console.log('Upload success: ' + result.responseCode);
+                            console.log(result.bytesSent + ' bytes sent');
+                        },
+                        function(error) {
+                            console.log('Error uploading file ' + path + ': ' + error.code);
+                        },
+                        {fileName: name});
             }
 
             function win(r) {
