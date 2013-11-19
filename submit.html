@@ -74,7 +74,7 @@
                                     <img id="photosubmit" src="images/pic.jpg" style="width:80%;margin-bottom: 20px;" />
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
-                                    <input type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
+                                    <input type="image" class="photoSubmitButton" src="images/submit.jpg" style="margin-top: 20px;" />                             
                                 </form>
                             </div>
 
@@ -125,7 +125,7 @@
                 var largeImage = document.getElementById('photosubmit');
                 largeImage.style.display = 'block';
                 largeImage.src = imageURI;
-                $("#textToolSubmit").show();
+                $("#photoToolSubmit").show();
             }
 
             // A button will call this function
@@ -161,7 +161,8 @@
                     $("#videoTool img").attr("src", "images/sub-video-white.png");
                     $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
                     $(".submitDiv").hide();
-                    capturePhoto();
+                    $("#textToolSubmit").show();
+
                 });
 
                 $("#photoTool").click(function() {
@@ -172,9 +173,10 @@
                     $("#textTool img").attr("src", "images/sub-text_white.png");
                     $("#videoTool img").attr("src", "images/sub-video-white.png");
                     $("#uploadTool img").attr("src", "images/ty-gallery-icon.png");
-
                     $(".submitDiv").hide();
-                    $("#photoToolSubmit").show();
+                    capturePhoto();
+
+
                 });
 
                 $("#videoTool").click(function() {
@@ -206,7 +208,7 @@
                     $("#uploadToolSubmit").show();
                 });
 
-                $("#textSubmitButton").click(function(e) {
+                $("#photoSubmitButton").click(function(e) {
                     e.preventDefault();
                     upload($("photosubmit").attr("src"));
                 });
