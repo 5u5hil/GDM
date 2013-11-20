@@ -91,12 +91,16 @@
 
                             <div id="uploadToolSubmit" class="submitDiv">
                                 <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
-                                    <img src="images/pic.jpg" style="width:80%;margin-bottom: 20px;" />
+                                    <img style="display: none;" id="uploadimg" src="images/pic.jpg" style="width:80%;margin-bottom: 20px;" />
+                                    <video style="display: none;" id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
+                                        <source src="">
+                                    </video> 
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
-                                    <input type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
+                                    <input id="uploadSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
                                 </form>
                             </div>
+
                             <div id="status" class="color-green"></div>
                         </div><!--home ends here-->
                     </div><!--st-content-inner ends here-->
@@ -118,8 +122,14 @@
             function onDeviceReady() {
                 pictureSource = navigator.camera.PictureSourceType;
                 destinationType = navigator.camera.DestinationType;
+
             }
 
+            Camera.MediaType = {
+                PICTURE: 0, // allow selection of still pictures only. DEFAULT. Will return format specified via DestinationType
+                VIDEO: 1, // allow selection of video only, WILL ALWAYS RETURN FILE_URI
+                ALLMEDIA: 2
+            };
 
             function onPhotoURISuccess(imageURI) {
                 var largeImage = document.getElementById('photosubmit');
@@ -133,16 +143,35 @@
                     if (data.duration > 15) {
                         alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
                     } else {
-                        $("#videosubmit")[0].src = mediaFiles[0].fullPath;   
+                        $("#videosubmit")[0].src = mediaFiles[0].fullPath;
                         $("#videosubmit")[0].play();
                         $("#videoToolSubmit").show();
-                     
+
                     }
                 });
             }
 
-            // A button will call this function
-            //
+            function onURISuccess(mediaFiles) {
+                if (mediaFiles[0].type.match(/image/g)) {
+                    $("#uploadvideo").hide();
+                    var largeImage = document.getElementById('uploadimg');
+                    largeImage.style.display = 'block';
+                    largeImage.src = mediaFiles[0].fullPath;
+                } else {
+                    mediaFiles[0].getFormatData(function(data) {
+                        if (data.duration > 15) {
+                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
+                        } else {
+                            $("#uploadimg").hide();
+                            $("#uploadvideo")[0].src = mediaFiles[0].fullPath;
+                            $("#uploadvideo").show();
+                            $("#uploadvideo")[0].play();
+                        }
+                    });
+                }
+                $("#uploadToolSubmit").show();
+            }
+
             function capturePhoto() {
                 navigator.camera.getPicture(onPhotoURISuccess, onFail, {
                     quality: 50,
@@ -156,26 +185,175 @@
                 navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 1, duration: 15});
             }
 
-
             function captureError(error) {
                 var msg = 'An error occurred during capture: ' + error.code;
                 navigator.notification.alert(msg, null, 'Uh oh!');
             }
 
-            // A button will call this function
-            //
             function getPhoto(source) {
-                navigator.camera.getPicture(onPhotoURISuccess, onFail, {quality: 50,
+                navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
                     destinationType: destinationType.FILE_URI,
-                    sourceType: source});
+                    sourceType: source,
+                });
             }
 
-            // Called if something bad happens.
-            //
             function onFail(message) {
                 alert('Failed because: ' + message);
             }
 
+            function upload(imageURI) {
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                var prof_id = window.localStorage.getItem("id");
+                var msg = $("#photoToolSubmit textarea").val();
+                var imagefilename = prof_id + "_" + Number(new Date()) + ".jpg";
+                options.fileName = imagefilename;
+                options.mimeType = "image/jpg";
+
+                var params = new Object();
+                params.imageURI = imageURI;
+                params.prof_id = window.localStorage.getItem("id");
+                params.msg = msg;
+                options.params = params;
+                options.chunkedMode = false;
+                var ft = new FileTransfer();
+                var url = "http://www.gooddeedmarathon.com/upload.php";
+
+                var statusDom = document.querySelector('#status');
+                ft.onprogress = function(progressEvent) {
+                    $("#status").show();
+                    if (progressEvent.lengthComputable) {
+                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+                        statusDom.innerHTML = perc + "% loaded...";
+                    } else {
+                        if (statusDom.innerHTML == "") {
+                            statusDom.innerHTML = "Loading";
+                        } else {
+                            statusDom.innerHTML += ".";
+                        }
+                    }
+                };
+                ft.upload(imageURI, url, win, fail, options, true);
+            }
+
+            function uploadVideo(mediaFile) {
+                var videoURI = mediaFile;
+                alert(videoURI);
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                var prof_id = window.localStorage.getItem("id");
+                var msg = $("#videoToolSubmit textarea").val();
+                var imagefilename = prof_id + "_" + Number(new Date()) + ".mp4";
+                options.fileName = imagefilename;
+                options.mimeType = "video/mp4";
+
+                var params = new Object();
+                params.videoURI = videoURI;
+                params.prof_id = window.localStorage.getItem("id");
+                params.msg = msg;
+                options.params = params;
+                options.chunkedMode = true;
+                var ft = new FileTransfer();
+                var url = "http://www.gooddeedmarathon.com/upload.php";
+
+                var statusDom = document.querySelector('#status');
+                ft.onprogress = function(progressEvent) {
+                    $("#status").show();
+                    if (progressEvent.lengthComputable) {
+                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+                        statusDom.innerHTML = perc + "% loaded...";
+                    } else {
+                        if (statusDom.innerHTML == "") {
+                            statusDom.innerHTML = "Loading";
+                        } else {
+                            statusDom.innerHTML += ".";
+                        }
+                    }
+                };
+                ft.upload(videoURI, url, win, fail, options, true);
+            }
+
+            function uploadImgLib(imageURI) {
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                var prof_id = window.localStorage.getItem("id");
+                var msg = $("#uploadToolSubmit textarea").val();
+                var imagefilename = prof_id + "_" + Number(new Date()) + ".jpg";
+                options.fileName = imagefilename;
+                options.mimeType = "image/jpg";
+
+                var params = new Object();
+                params.imageURI = imageURI;
+                params.prof_id = window.localStorage.getItem("id");
+                params.msg = msg;
+                options.params = params;
+                options.chunkedMode = false;
+                var ft = new FileTransfer();
+                var url = "http://www.gooddeedmarathon.com/upload.php";
+
+                var statusDom = document.querySelector('#status');
+                ft.onprogress = function(progressEvent) {
+                    $("#status").show();
+                    if (progressEvent.lengthComputable) {
+                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+                        statusDom.innerHTML = perc + "% loaded...";
+                    } else {
+                        if (statusDom.innerHTML == "") {
+                            statusDom.innerHTML = "Loading";
+                        } else {
+                            statusDom.innerHTML += ".";
+                        }
+                    }
+                };
+                ft.upload(imageURI, url, win, fail, options, true);
+            }
+
+            function uploadVideoLib(mediaFile) {
+                var videoURI = mediaFile;
+                alert(videoURI);
+                var options = new FileUploadOptions();
+                options.fileKey = "file";
+                var prof_id = window.localStorage.getItem("id");
+                var msg = $("#uploadToolSubmit textarea").val();
+                var imagefilename = prof_id + "_" + Number(new Date()) + ".mp4";
+                options.fileName = imagefilename;
+                options.mimeType = "video/mp4";
+
+                var params = new Object();
+                params.videoURI = videoURI;
+                params.prof_id = window.localStorage.getItem("id");
+                params.msg = msg;
+                options.params = params;
+                options.chunkedMode = true;
+                var ft = new FileTransfer();
+                var url = "http://www.gooddeedmarathon.com/upload.php";
+
+                var statusDom = document.querySelector('#status');
+                ft.onprogress = function(progressEvent) {
+                    $("#status").show();
+                    if (progressEvent.lengthComputable) {
+                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+                        statusDom.innerHTML = perc + "% loaded...";
+                    } else {
+                        if (statusDom.innerHTML == "") {
+                            statusDom.innerHTML = "Loading";
+                        } else {
+                            statusDom.innerHTML += ".";
+                        }
+                    }
+                };
+                ft.upload(videoURI, url, win, fail, options, true);
+            }
+
+            function win(r) {
+                $("#status").hide();
+                alert(JSON.stringify(r));
+                alert("Image uploaded successfully!!");
+            }
+
+            function fail(error) {
+                alert(error);
+            }
 
             $(document).ready(function() {
                 $("#textTool").click(function() {
@@ -231,103 +409,31 @@
 
 
                     $(".submitDiv").hide();
-                    $("#uploadToolSubmit").show();
+                    getPhoto(pictureSource.PHOTOLIBRARY);
+
                 });
 
                 $("#photoSubmitButton").click(function(e) {
                     e.preventDefault();
                     upload($("#photosubmit").attr("src"));
                 });
+
                 $("#videoSubmitButton").click(function(e) {
                     e.preventDefault();
                     uploadVideo($("#videosubmit")[0].src);
                 });
+
+                $("#uploadSubmitButton").click(function(e) {
+                    e.preventDefault();
+                    if ($("#uploadimg").css("display") == "none") {
+                        uploadImgLib($("#uploadimg").attr("src"));
+                    } else {
+                        uploadVideoLib($("#uploadvideo")[0].src);
+                    }
+
+                });
             });
 
-
-            function upload(imageURI) {
-                var options = new FileUploadOptions();
-                options.fileKey = "file";
-                var prof_id = window.localStorage.getItem("id");
-                var msg = $("#photoToolSubmit textarea").val();
-                var imagefilename = prof_id + "_" + Number(new Date()) + ".jpg";
-                options.fileName = imagefilename;
-                options.mimeType = "image/jpg";
-
-                var params = new Object();
-                params.imageURI = imageURI;
-                params.prof_id = window.localStorage.getItem("id");
-                params.msg = msg;
-                options.params = params;
-                options.chunkedMode = false;
-                var ft = new FileTransfer();
-                var url = "http://www.gooddeedmarathon.com/upload.php";
-
-                var statusDom = document.querySelector('#status');
-                ft.onprogress = function(progressEvent) {
-                    $("#status").show();
-                    if (progressEvent.lengthComputable) {
-                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
-                        statusDom.innerHTML = perc + "% loaded...";
-                    } else {
-                        if (statusDom.innerHTML == "") {
-                            statusDom.innerHTML = "Loading";
-                        } else {
-                            statusDom.innerHTML += ".";
-                        }
-                    }
-                };
-                ft.upload(imageURI, url, win, fail, options, true);
-            }
-
-
-
-            function uploadVideo(mediaFile) {
-                var videoURI = mediaFile;
-                alert(videoURI);
-                var options = new FileUploadOptions();
-                options.fileKey = "file";
-                var prof_id = window.localStorage.getItem("id");
-                var msg = $("#videoToolSubmit textarea").val();
-                var imagefilename = prof_id + "_" + Number(new Date()) + ".mp4";
-                options.fileName = imagefilename;
-                options.mimeType = "video/mp4";
-
-                var params = new Object();
-                params.videoURI = videoURI;
-                params.prof_id = window.localStorage.getItem("id");
-                params.msg = msg;
-                options.params = params;
-                options.chunkedMode = true;
-                var ft = new FileTransfer();
-                var url = "http://www.gooddeedmarathon.com/upload.php";
-
-                var statusDom = document.querySelector('#status');
-                ft.onprogress = function(progressEvent) {
-                    $("#status").show();
-                    if (progressEvent.lengthComputable) {
-                        var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
-                        statusDom.innerHTML = perc + "% loaded...";
-                    } else {
-                        if (statusDom.innerHTML == "") {
-                            statusDom.innerHTML = "Loading";
-                        } else {
-                            statusDom.innerHTML += ".";
-                        }
-                    }
-                };
-                ft.upload(videoURI, url, win, fail, options, true);
-            }
-
-            function win(r) {
-                $("#status").hide();
-                alert(JSON.stringify(r));
-                alert("Image uploaded successfully!!");
-            }
-//Failure callback
-            function fail(error) {
-                alert(error);
-            }
         </script>
 
     </body>
