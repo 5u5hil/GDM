@@ -147,7 +147,6 @@
 
             function getPhoto(source) {
                 navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
-                    destinationType: destinationType.DATA_URI,
                     sourceType: source,
                     mediaType: mediaType.ALLMEDIA
                 });
