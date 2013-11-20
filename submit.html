@@ -131,47 +131,6 @@
                 ALLMEDIA: 2
             };
 
-            function onPhotoURISuccess(imageURI) {
-                var largeImage = document.getElementById('photosubmit');
-                largeImage.style.display = 'block';
-                largeImage.src = imageURI;
-                $("#photoToolSubmit").show();
-            }
-
-            function captureSuccess(mediaFiles) {
-                mediaFiles[0].getFormatData(function(data) {
-                    if (data.duration > 15) {
-                        alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
-                    } else {
-                        $("#videosubmit")[0].src = mediaFiles[0].fullPath;
-                        $("#videosubmit")[0].play();
-                        $("#videoToolSubmit").show();
-
-                    }
-                });
-            }
-
-            function onURISuccess(mediaFiles) {
-                if (mediaFiles[0].type.match(/image/g)) {
-                    $("#uploadvideo").hide();
-                    var largeImage = document.getElementById('uploadimg');
-                    largeImage.style.display = 'block';
-                    largeImage.src = mediaFiles[0].fullPath;
-                } else {
-                    mediaFiles[0].getFormatData(function(data) {
-                        if (data.duration > 15) {
-                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
-                        } else {
-                            $("#uploadimg").hide();
-                            $("#uploadvideo")[0].src = mediaFiles[0].fullPath;
-                            $("#uploadvideo").show();
-                            $("#uploadvideo")[0].play();
-                        }
-                    });
-                }
-                $("#uploadToolSubmit").show();
-            }
-
             function capturePhoto() {
                 navigator.camera.getPicture(onPhotoURISuccess, onFail, {
                     quality: 50,
@@ -194,7 +153,50 @@
                 navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
                     destinationType: destinationType.FILE_URI,
                     sourceType: source,
+                    mediaType: camera.MediaType.ALLMEDIA
                 });
+            }
+
+            function onPhotoURISuccess(imageURI) {
+                var largeImage = document.getElementById('photosubmit');
+                largeImage.style.display = 'block';
+                largeImage.src = imageURI;
+                $("#photoToolSubmit").show();
+            }
+
+            function captureSuccess(mediaFiles) {
+                mediaFiles[0].getFormatData(function(data) {
+                    if (data.duration > 15) {
+                        alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
+                    } else {
+                        $("#videosubmit")[0].src = mediaFiles[0].fullPath;
+                        $("#videosubmit")[0].play();
+                        $("#videoToolSubmit").show();
+
+                    }
+                });
+            }
+
+            function onURISuccess(mediaFiles) {
+                var res = mediaFiles[0].type.match(/image/g);
+                if (res.length > 0) {
+                    $("#uploadvideo").hide();
+                    var largeImage = document.getElementById('uploadimg');
+                    largeImage.style.display = 'block';
+                    largeImage.src = mediaFiles[0].fullPath;
+                } else {
+                    mediaFiles[0].getFormatData(function(data) {
+                        if (data.duration > 15) {
+                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
+                        } else {
+                            $("#uploadimg").hide();
+                            $("#uploadvideo")[0].src = mediaFiles[0].fullPath;
+                            $("#uploadvideo").show();
+                            $("#uploadvideo")[0].play();
+                        }
+                    });
+                }
+                $("#uploadToolSubmit").show();
             }
 
             function onFail(message) {
