@@ -45,7 +45,7 @@
                                 Share your good deeds with everyone so they know how awesome you are! <br />
                                 Tell us about them in any way you want.
                             </p>
-                       
+
                             <div class="submitModes">
                                 <p id="textTool">Text <br />                                    
                                     <img src="images/sub-text_white.png" />
@@ -174,29 +174,32 @@
             }
 
             function onURISuccess(mediaFiles) {
-                alert(mediaFiles[0].type);
-                var png = mediaFiles.match(/png/g);
-                var jpg = mediaFiles.match(/jpg/g);
-                var jpeg = mediaFiles.match(/jpeg/g);
-                var gif = mediaFiles.match(/gif/g);
-                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length) {
-                    $("#uploadvideo").hide();
-                    var largeImage = document.getElementById('uploadimg');
-                    largeImage.style.display = 'block';
-                    largeImage.src = mediaFiles;
-                } else {
-                    mediaFiles.getFormatData(function(data) {
-                        if (data.duration > 15) {
-                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
-                        } else {
-                            $("#uploadimg").hide();
-                            $("#uploadvideo")[0].src = mediaFiles.fullPath;
-                            $("#uploadvideo").show();
-                            $("#uploadvideo")[0].play();
-                        }
-                    });
-                }
+
+                var largeImage = document.getElementById('uploadimg');
+                largeImage.style.display = 'block';
+                largeImage.src = mediaFiles;
                 $("#uploadToolSubmit").show();
+
+//                var png = mediaFiles.match(/png/g);
+//                var jpg = mediaFiles.match(/jpg/g);
+//                var jpeg = mediaFiles.match(/jpeg/g);
+//                var gif = mediaFiles.match(/gif/g);
+//                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length) {
+//                    $("#uploadvideo").hide();
+//
+//                } else {
+//                    mediaFiles.getFormatData(function(data) {
+//                        if (data.duration > 15) {
+//                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
+//                        } else {
+//                            $("#uploadimg").hide();
+//                            $("#uploadvideo")[0].src = mediaFiles.fullPath;
+//                            $("#uploadvideo").show();
+//                            $("#uploadvideo")[0].play();
+//                        }
+//                    });
+//                }
+
             }
 
             function onFail(message) {
