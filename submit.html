@@ -133,9 +133,10 @@
                     if (data.duration > 15) {
                         alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
                     } else {
-                        $("#videosubmit")[0].src = mediaFiles[0].fullPath;
-                        $("#videoToolSubmit").show();
+                        $("#videosubmit")[0].src = mediaFiles[0].fullPath;   
                         $("#videosubmit")[0].play();
+                        $("#videoToolSubmit").show();
+                     
                     }
                 });
             }
@@ -290,7 +291,7 @@
                 var msg = $("#videoToolSubmit textarea").val();
                 var imagefilename = prof_id + "_" + Number(new Date()) + ".mp4";
                 options.fileName = imagefilename;
-                options.mimeType = "image/jpg";
+                options.mimeType = "video/mp4";
 
                 var params = new Object();
                 params.videoURI = videoURI;
