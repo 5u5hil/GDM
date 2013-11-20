@@ -147,7 +147,7 @@
 
             function getPhoto(source) {
                 navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
-                    destinationType: destinationType.DATA_URL,
+                    destinationType: destinationType.FILE_URI,
                     sourceType: source,
                     mediaType: mediaType.ALLMEDIA
                 });
@@ -175,12 +175,15 @@
 
             function onURISuccess(mediaFiles) {
                 alert(mediaFiles);
-                var res = mediaFiles.type.match(/image/g);
-                if (res.length > 0) {
+                var png = mediaFiles.match(/png/g);
+                var jpg = mediaFiles.match(/jpg/g);
+                var jpeg = mediaFiles.match(/jpeg/g);
+                var gif = mediaFiles.match(/gif/g);
+                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length) {
                     $("#uploadvideo").hide();
                     var largeImage = document.getElementById('uploadimg');
                     largeImage.style.display = 'block';
-                    largeImage.src = mediaFiles.fullPath;
+                    largeImage.src = mediaFiles;
                 } else {
                     mediaFiles.getFormatData(function(data) {
                         if (data.duration > 15) {
