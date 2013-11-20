@@ -174,7 +174,7 @@
             }
 
             function onURISuccess(mediaFiles) {
-                alert(mediaFiles);
+                alert(mediaFiles[0].type);
                 var png = mediaFiles.match(/png/g);
                 var jpg = mediaFiles.match(/jpg/g);
                 var jpeg = mediaFiles.match(/jpeg/g);
