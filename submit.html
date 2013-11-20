@@ -180,13 +180,10 @@
             }
 
             function onURINext(mediaFiles) {
-                var mediaFiles = mediaFiles.fullPath;
-                alert(mediaFiles);
-                var png = mediaFiles.match(/png/g);
-                var jpg = mediaFiles.match(/jpg/g);
-                var jpeg = mediaFiles.match(/jpeg/g);
-                var gif = mediaFiles.match(/gif/g);
-                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length > 0) {
+                mediaFiles = mediaFiles.fullPath;
+               
+               
+                if (/jpg/i.test(mediaFiles) || /png/i.test(mediaFiles)) { alert(mediaFiles);
                     $("#uploadvideo").hide();
                     var largeImage = document.getElementById('uploadimg');
                     largeImage.style.display = 'block';
