@@ -130,7 +130,7 @@
             function capturePhoto() {
                 navigator.camera.getPicture(onPhotoURISuccess, onFail, {
                     quality: 50,
-                    destinationType: destinationType.DATA_URI,
+                    destinationType: destinationType.FILE_URI,
                     targetWidth: 640,
                     targetHeight: 640
                 });
@@ -147,7 +147,7 @@
 
             function getPhoto(source) {
                 navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
-                    destinationType: destinationType.FILE_URI,
+                    destinationType: destinationType.DATA_URI,
                     sourceType: source,
                     mediaType: mediaType.ALLMEDIA
                 });
