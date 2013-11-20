@@ -174,32 +174,29 @@
             }
 
             function onURISuccess(mediaFiles) {
+                var png = mediaFiles.match(/png/g);
+                var jpg = mediaFiles.match(/jpg/g);
+                var jpeg = mediaFiles.match(/jpeg/g);
+                var gif = mediaFiles.match(/gif/g);
+                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length) {
+                    $("#uploadvideo").hide();
+                    var largeImage = document.getElementById('uploadimg');
+                    largeImage.style.display = 'block';
+                    largeImage.src = mediaFiles;
 
-                var largeImage = document.getElementById('uploadimg');
-                largeImage.style.display = 'block';
-                largeImage.src = mediaFiles;
+                } else {
+                    mediaFiles.getFormatData(function(data) {
+                        if (data.duration > 15) {
+                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
+                        } else {
+                            $("#uploadimg").hide();
+                            $("#uploadvideo")[0].src = mediaFiles.fullPath;
+                            $("#uploadvideo").show();
+                            $("#uploadvideo")[0].play();
+                        }
+                    });
+                }
                 $("#uploadToolSubmit").show();
-
-//                var png = mediaFiles.match(/png/g);
-//                var jpg = mediaFiles.match(/jpg/g);
-//                var jpeg = mediaFiles.match(/jpeg/g);
-//                var gif = mediaFiles.match(/gif/g);
-//                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length) {
-//                    $("#uploadvideo").hide();
-//
-//                } else {
-//                    mediaFiles.getFormatData(function(data) {
-//                        if (data.duration > 15) {
-//                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
-//                        } else {
-//                            $("#uploadimg").hide();
-//                            $("#uploadvideo")[0].src = mediaFiles.fullPath;
-//                            $("#uploadvideo").show();
-//                            $("#uploadvideo")[0].play();
-//                        }
-//                    });
-//                }
-
             }
 
             function onFail(message) {
