@@ -113,6 +113,7 @@
             var pictureSource;   // picture source
             var destinationType; // sets the format of returned value
             var mediaType;
+            var mediaMain;
 
             // Wait for device API libraries to load
             //
@@ -173,37 +174,38 @@
             }
 
             function onURISuccess(mediaFiles) {
-              
-                window.resolveLocalFileSystemURI(mediaFiles, onURINext, fail); 
-                
+                mediaMain = mediaFiles;
+                window.resolveLocalFileSystemURI(mediaFiles, onURINext, fail);
+
             }
-            
-            function onURINext(mediaFiles){
+
+            function onURINext(mediaFiles) {
                 var mediaFiles = mediaFiles.fullPath;
                 alert(mediaFiles);
                 var png = mediaFiles.match(/png/g);
                 var jpg = mediaFiles.match(/jpg/g);
                 var jpeg = mediaFiles.match(/jpeg/g);
                 var gif = mediaFiles.match(/gif/g);
-                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length) {
+                if (png.length > 0 || jpg.length > 0 || jpeg.length > 0 || gif.length > 0) {
                     $("#uploadvideo").hide();
                     var largeImage = document.getElementById('uploadimg');
                     largeImage.style.display = 'block';
-                    largeImage.src = mediaFiles;
-
+                    largeImage.src = mediaMain;
+                    $("#uploadToolSubmit").show();
                 } else {
-                    mediaFiles.getFormatData(function(data) {
+                    mediaMain.getFormatData(function(data) {
                         if (data.duration > 15) {
                             alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
                         } else {
                             $("#uploadimg").hide();
-                            $("#uploadvideo")[0].src = mediaFiles.fullPath;
+                            $("#uploadvideo")[0].src = mediaMain;
                             $("#uploadvideo").show();
                             $("#uploadvideo")[0].play();
+                            $("#uploadToolSubmit").show();
                         }
                     });
                 }
-                $("#uploadToolSubmit").show();
+
             }
 
             function onFail(message) {
