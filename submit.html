@@ -175,7 +175,7 @@
             function onURISuccess(mediaFiles) {
               
                 window.resolveLocalFileSystemURI(mediaFiles, function(data){
-                   alert(data);
+                   alert(JSON.stringify(data));
                 }, fail);  alert(mediaFiles);
                 var png = mediaFalert(mediaFiles);iles.match(/png/g);
                 var jpg = mediaFiles.match(/jpg/g);
