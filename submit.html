@@ -174,10 +174,14 @@
 
             function onURISuccess(mediaFiles) {
               
-                window.resolveLocalFileSystemURI(mediaFiles, function(data){
-                   alert(JSON.stringify(data));
-                }, fail);  alert(mediaFiles);
-                var png = mediaFalert(mediaFiles);iles.match(/png/g);
+                window.resolveLocalFileSystemURI(mediaFiles, onURINext(data), fail); 
+                
+            }
+            
+            function onURINext(mediaFiles){
+                var mediaFiles = mediaFiles.fullPath;
+                alert(mediaFiles);
+                var png = mediaFiles.match(/png/g);
                 var jpg = mediaFiles.match(/jpg/g);
                 var jpeg = mediaFiles.match(/jpeg/g);
                 var gif = mediaFiles.match(/gif/g);
