@@ -122,7 +122,7 @@
             function onDeviceReady() {
                 pictureSource = navigator.camera.PictureSourceType;
                 destinationType = navigator.camera.DestinationType;
-                mediaType = navigator.camera.MediaType;
+                mediaType = navigator.camera.mediaType;
             }
 
 
@@ -148,7 +148,7 @@
                 navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
                     destinationType: destinationType.FILE_URI,
                     sourceType: source,
-                    MediaType: mediaType.ALLMEDIA
+                    mediaType: mediaType.ALLMEDIA
                 });
             }
 
@@ -173,19 +173,20 @@
             }
 
             function onURISuccess(mediaFiles) {
-                var res = mediaFiles[0].type.match(/image/g);
+                alert(mediaFiles.type);
+                var res = mediaFiles.type.match(/image/g);
                 if (res.length > 0) {
                     $("#uploadvideo").hide();
                     var largeImage = document.getElementById('uploadimg');
                     largeImage.style.display = 'block';
-                    largeImage.src = mediaFiles[0].fullPath;
+                    largeImage.src = mediaFiles.fullPath;
                 } else {
-                    mediaFiles[0].getFormatData(function(data) {
+                    mediaFiles.getFormatData(function(data) {
                         if (data.duration > 15) {
                             alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
                         } else {
                             $("#uploadimg").hide();
-                            $("#uploadvideo")[0].src = mediaFiles[0].fullPath;
+                            $("#uploadvideo")[0].src = mediaFiles.fullPath;
                             $("#uploadvideo").show();
                             $("#uploadvideo")[0].play();
                         }
@@ -406,7 +407,7 @@
 
 
                     $(".submitDiv").hide();
-                    getPhoto(pictureSource.PHOTOLIBRARY);
+                    getPhoto(pictureSource.SAVEDPHOTOALBUM);
 
                 });
 
