@@ -147,7 +147,7 @@
 
             function getPhoto(source) {
                 navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
-                    destinationType: destinationType.FILE_URI,
+                    destinationType: destinationType.DATA_URL,
                     sourceType: source,
                     mediaType: mediaType.ALLMEDIA
                 });
@@ -174,7 +174,7 @@
             }
 
             function onURISuccess(mediaFiles) {
-                alert(mediaFiles.type);
+                alert(mediaFiles);
                 var res = mediaFiles.type.match(/image/g);
                 if (res.length > 0) {
                     $("#uploadvideo").hide();
