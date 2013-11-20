@@ -283,6 +283,7 @@
 
             function uploadVideo(mediaFile) {
                 var videoURI = mediaFile;
+                alert(videoURI);
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
                 var prof_id = window.localStorage.getItem("id");
@@ -296,7 +297,7 @@
                 params.prof_id = window.localStorage.getItem("id");
                 params.msg = msg;
                 options.params = params;
-                options.chunkedMode = false;
+                options.chunkedMode = true;
                 var ft = new FileTransfer();
                 var url = "http://www.gooddeedmarathon.com/upload.php";
 
