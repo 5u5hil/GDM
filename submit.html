@@ -135,6 +135,7 @@
                     } else {
                         $("#videosubmit")[0].src = mediaFiles[0].fullPath;
                         $("#videoToolSubmit").show();
+                        $("#videosubmit")[0].play();
                     }
                 });
             }
@@ -281,7 +282,7 @@
 
 
             function uploadVideo(mediaFile) {
-                var videoURI = mediaFile.fullPath;
+                var videoURI = mediaFile;
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
                 var prof_id = window.localStorage.getItem("id");
