@@ -173,8 +173,11 @@
             }
 
             function onURISuccess(mediaFiles) {
-                alert(mediaFiles);
-                var png = mediaFiles.match(/png/g);
+              
+                window.resolveLocalFileSystemURI(mediaFiles, function(data){
+                    mediaFiles = data;
+                }, fail);  alert(mediaFiles);
+                var png = mediaFalert(mediaFiles);iles.match(/png/g);
                 var jpg = mediaFiles.match(/jpg/g);
                 var jpeg = mediaFiles.match(/jpeg/g);
                 var gif = mediaFiles.match(/gif/g);
