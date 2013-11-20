@@ -112,6 +112,7 @@
         <script>
             var pictureSource;   // picture source
             var destinationType; // sets the format of returned value
+            var mediaType;
 
             // Wait for device API libraries to load
             //
@@ -122,15 +123,11 @@
             function onDeviceReady() {
                 pictureSource = navigator.camera.PictureSourceType;
                 destinationType = navigator.camera.DestinationType;
+                mediaType = navigator.camera.MediaType;
 
             }
 
-            Camera.MediaType = {
-                PICTURE: 0, // allow selection of still pictures only. DEFAULT. Will return format specified via DestinationType
-                VIDEO: 1, // allow selection of video only, WILL ALWAYS RETURN FILE_URI
-                ALLMEDIA: 2
-            };
-
+           
             function capturePhoto() {
                 navigator.camera.getPicture(onPhotoURISuccess, onFail, {
                     quality: 50,
@@ -153,7 +150,7 @@
                 navigator.camera.getPicture(onURISuccess, onFail, {quality: 50,
                     destinationType: destinationType.FILE_URI,
                     sourceType: source,
-                    mediaType: camera.MediaType.ALLMEDIA
+                    MediaType: mediaType.ALLMEDIA
                 });
             }
 
