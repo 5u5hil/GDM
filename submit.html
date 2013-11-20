@@ -316,30 +316,9 @@
                 ft.upload(videoURI, url, win, fail, options, true);
             }
 
-
-
-
-
-            function uploadVideo(mediaFile) {
-                var ft = new FileTransfer(),
-                        path = mediaFile.fullPath,
-                        name = mediaFile.name;
-
-                ft.upload(path,
-                        "http://www.goodDeedMarathon/upload.php",
-                        function(result) {
-                            console.log('Upload success: ' + result.responseCode);
-                            console.log(result.bytesSent + ' bytes sent');
-                        },
-                        function(error) {
-                            console.log('Error uploading file ' + path + ': ' + error.code);
-                        },
-                        {fileName: name});
-            }
-
             function win(r) {
                 $("#status").hide();
-                alert(r);
+                alert(JSON.stringify(r));
                 alert("Image uploaded successfully!!");
             }
 //Failure callback
