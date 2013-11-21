@@ -190,10 +190,9 @@
                     largeImage.src = mediaMain;
                     $("#uploadToolSubmit").show();
                 } else {
-                    vid = new Media(mediaFiles.fullPath,onSuccess,onSuccess);
-                    alert(vid.getDuration());
                     $("#uploadimg").hide();
                     $("#uploadvideo")[0].src = mediaMain;
+                    alert($("#uploadvideo").duration);
                     $("#uploadvideo").show();
                     $("#uploadvideo")[0].play();
                     $("#uploadToolSubmit").show();
