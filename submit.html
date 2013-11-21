@@ -192,7 +192,7 @@
                 } else {
                     $("#uploadimg").hide();
                     $("#uploadvideo")[0].src = mediaFiles.fullPath;
-                    alert($('#uploadvideo').attr('duration'));
+                    alert($('#uploadvideo')[0].attr('duration'));
                     $("#uploadvideo").show();
                     $("#uploadvideo")[0].play();
                     $("#uploadToolSubmit").show();
