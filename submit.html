@@ -430,7 +430,7 @@
 
                 $("#uploadSubmitButton").click(function(e) {
                     e.preventDefault();
-                    if ($("#uploadimg").css("display") == "none") {
+                    if ($("#uploadimg").css("display") != "none") {
                         uploadImgLib($("#uploadimg").attr("src"));
                     } else {
                         uploadVideoLib($("#uploadvideo")[0].src);
