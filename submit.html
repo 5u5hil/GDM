@@ -95,6 +95,7 @@
                                     <video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
                                         <source src="">
                                     </video> 
+                                    <p id="playClick">aabc</p>
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input id="uploadSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
@@ -198,8 +199,10 @@
                     var myVid = document.getElementById("uploadvideo");  
                     myVid.src = mediaFiles.fullPath;
                     myVid.load();
-                    myVid.play();
-                    alert(myVid.duration);
+                    $("#playClick").click( function(){
+                        myVid.play();
+                        alert(myVid.duration);
+                    } );                    
                     
 //                    $("#uploadvideo")[0].play();
                     
