@@ -114,6 +114,7 @@
             var destinationType; // sets the format of returned value
             var mediaType;
             var mediaMain;
+            var vid;
 
             // Wait for device API libraries to load
             //
@@ -189,17 +190,26 @@
                     largeImage.src = mediaMain;
                     $("#uploadToolSubmit").show();
                 } else {
-                   var  vid = new Media(mediaFiles.fullPath);
-                       alert(vid.getDuration()); 
-                            $("#uploadimg").hide();
-                            $("#uploadvideo")[0].src = mediaMain;
-                            $("#uploadvideo").show();
-                            $("#uploadvideo")[0].play();
-                            $("#uploadToolSubmit").show();
-                        
-                 
+                    vid = new Media(mediaFiles.fullPath,onSuccess,onSuccess);
+                    alert(vid.getDuration());
+                    $("#uploadimg").hide();
+                    $("#uploadvideo")[0].src = mediaMain;
+                    $("#uploadvideo").show();
+                    $("#uploadvideo")[0].play();
+                    $("#uploadToolSubmit").show();
+
+
                 }
 
+            }
+
+            function onSuccess() {
+                console.log("playAudio():Audio Success");
+            }
+
+            function onSuccess(error) {
+                alert('code: ' + error.code + '\n' +
+                        'message: ' + error.message + '\n');
             }
 
             function onFail(message) {
