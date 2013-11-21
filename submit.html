@@ -161,6 +161,7 @@
             }
 
             function captureSuccess(mediaFiles) {
+                alert(JSON.stringify(mediaFiles))
                 mediaFiles[0].getFormatData(function(data) {
                     if (data.duration > 15) {
                         alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
