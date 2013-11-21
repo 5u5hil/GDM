@@ -92,7 +92,7 @@
                             <div id="uploadToolSubmit" class="submitDiv">
                                 <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
                                     <img id="uploadimg" src="images/pic.jpg" style="display: none;width:80%;margin-bottom: 20px;" />
-                                    <video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
+                                    <video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="" preload="meta">
                                         <source src="">
                                     </video> 
                                     <p id="playClick">aabc</p>
@@ -198,7 +198,7 @@
                   
                     var myVid = document.getElementById("uploadvideo");  
                     myVid.src = mediaFiles.fullPath;
-                     $("#uploadvideo").attr("preload","metadata");
+                   
                     myVid.load();
                     alert(Math.round(myVid.duration));
                     $("#playClick").click( function(){
