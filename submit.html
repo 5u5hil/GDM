@@ -191,8 +191,8 @@
                     $("#uploadToolSubmit").show();
                 } else {
                     $("#uploadimg").hide();
-                    $("#uploadvideo")[0].src = mediaMain;
-                    myVid = document.getElementById("uploadvideo");
+                    $("#uploadvideo")[0].src = mediaFiles.fullPath;
+                    var myVid = document.getElementById("uploadvideo");
                     alert(myVid.duration);
                     $("#uploadvideo").show();
                     $("#uploadvideo")[0].play();
