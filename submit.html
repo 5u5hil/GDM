@@ -92,7 +92,7 @@
                             <div id="uploadToolSubmit" class="submitDiv">
                                 <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
                                     <img id="uploadimg" src="images/pic.jpg" style="display: none;width:80%;margin-bottom: 20px;" />
-                                    <video id="uploadvideo" style="display: none;width:80%;margin-bottom: 20px;" controls="" autoplay="">
+                                    <video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
                                         <source src="">
                                     </video> 
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
@@ -191,12 +191,17 @@
                     $("#uploadToolSubmit").show();
                 } else {
                     $("#uploadimg").hide();
-                    $("#uploadToolSubmit").show();$("#uploadvideo").show();
-                    $("#uploadvideo")[0].src = mediaFiles.fullPath;
-                    var myVid = document.getElementById("uploadvideo");
+                    $("#uploadToolSubmit").show();
+                    $("#uploadvideo").show();
+                    
+                  
+                    var myVid = document.getElementById("uploadvideo");  
+                    myVid.src = mediaFiles.fullPath;
+                    myVid.load();
+                    myVid.play();
                     alert(myVid.duration);
                     
-                    $("#uploadvideo")[0].play();
+//                    $("#uploadvideo")[0].play();
                     
 
 
