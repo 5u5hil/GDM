@@ -15,6 +15,7 @@ body,
 .st-pusher,
 .st-content {
     height: 100%;
+    -webkit-tap-highlight-color: transparent !important;
 }
 
 .st-content {
