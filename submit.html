@@ -190,17 +190,15 @@
                     $("#uploadToolSubmit").show();
                 } else {
                     alert(JSON.stringify(mediaFiles));
-                    mediaFiles.getFormatData(function(data) {
-                        if (data.duration > 15) {
-                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
-                        } else {
+                 
+                       alert(mediaMain.getDuration); alert(mediaFiles.getDuration);
                             $("#uploadimg").hide();
-                            $("#uploadvideo")[0].src = mediaFiles.fullPath;
+                            $("#uploadvideo")[0].src = mediaMain;
                             $("#uploadvideo").show();
                             $("#uploadvideo")[0].play();
                             $("#uploadToolSubmit").show();
-                        }
-                    });
+                        
+                 
                 }
 
             }
