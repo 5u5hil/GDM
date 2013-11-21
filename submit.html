@@ -95,7 +95,7 @@
                                     <video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="" preload="meta">
                                         <source src="">
                                     </video> 
-                                    <p id="playClick">aabc</p>
+                                    <button id="playClick">aabc</button>
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input id="uploadSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
@@ -194,20 +194,17 @@
                     $("#uploadimg").hide();
                     $("#uploadToolSubmit").show();
                     $("#uploadvideo").show();
-                    
-                  
-                    var myVid = document.getElementById("uploadvideo");  
+
+
+                    var myVid = document.getElementById("uploadvideo");
                     myVid.src = mediaFiles.fullPath;
-                   
+
                     myVid.load();
                     alert(Math.round(myVid.duration));
-                    $("#playClick").click( function(){
-                        myVid.play();
-                        alert(myVid.duration);
-                    } );                    
-                    
+
+
 //                    $("#uploadvideo")[0].play();
-                    
+
 
 
                 }
@@ -382,6 +379,10 @@
             }
 
             $(document).ready(function() {
+                $("#playClick").click(function() {
+                    myVid.play();
+                });
+
                 $("#textTool").click(function() {
                     $(this).siblings("p").removeClass("color-green");
                     $(this).addClass("color-green");
