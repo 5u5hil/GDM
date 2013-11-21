@@ -198,7 +198,7 @@
                   
                     var myVid = document.getElementById("uploadvideo");  
                     myVid.src = mediaFiles.fullPath;
-                    myVid.attr("preload","metadata");
+                     $("#uploadvideo").attr("preload","metadata");
                     myVid.load();
                     alert(Math.round(myVid.duration));
                     $("#playClick").click( function(){
