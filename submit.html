@@ -92,11 +92,9 @@
                             <div id="uploadToolSubmit" class="submitDiv">
                                 <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
                                     <img id="uploadimg" src="images/pic.jpg" style="display: none;width:80%;margin-bottom: 20px;" />
-
                                     <span id="blah">
 
                                     </span>
-                                    <button id="playClick">aabc</button>
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input id="uploadSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
@@ -196,17 +194,18 @@
                     $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls><source src="' + mediaFiles.fullPath + '"></video>');
 
 
+                    setTimeout(function() {
+                        var myVid = document.getElementById("uploadvideo");
+                        var duration = Math.round(myVid.duration);
+                        alert(duration);
+                        if (duration > 15) {
+                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
 
-                    var myVid = document.getElementById("uploadvideo");
-                    var duration = Math.round(myVid.duration);
-                    alert(duration);
-                    if (duration > 15) {
-                        alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
-
-                    } else {
-                        $("#uploadToolSubmit").show();
-                        $("#uploadvideo").show();
-                    }
+                        } else {
+                            $("#uploadToolSubmit").show();
+                            $("#uploadvideo").show();
+                        }
+                    }, 100);
 
 
 
