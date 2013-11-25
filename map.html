@@ -40,12 +40,12 @@
                             <p class="left-menu"><a href="#" data-effect="st-effect-13" id="trigger" class="menu-trigger">Open/Close Menu</a></p>
                             <p style="text-align: center; margin: 0; padding: 0;"><img src="images/gdm_logo.png" width="129" height="50" /></p>
                         </header>
-                        <p class="color-blue">
+                        <p class="color-blue" style="text-align: center">
                             Mumbai's coming alive with people all over the city joining the<br />
                             <span class="color-green">Good Deed Marathon!</span>
                         </p>
-                        <div id="home" class="content center-align">
-                            <iframe src="http://www.gooddeedmarathon.com/getMap.php"></iframe>
+                        <div id="home" class="content center-align" style="margin: 20px;">
+                            <iframe src="http://www.gooddeedmarathon.com/getMap.php" style="border: none;width:100%;overflow: hidden" scrolling="no"></iframe>
                         </div><!--home ends here-->
                     </div><!--st-content-inner ends here-->
                 </div><!--.st-content ends here-->
@@ -53,6 +53,9 @@
         </div><!--st-container ends here-->
         <script src="js/classie.js"></script>
         <script src="js/sidebarEffects.js"></script>
-  
+        <script>
+            $("iframe").attr("src","http://www.gooddeedmarathon.com/getMap.php?width="+document.getElementById("home").offsetWidth+"&height="+$( document ).height())
+            $("iframe").css("height",$( document ).height()+"px")
+        </script>
     </body>
 </html>
