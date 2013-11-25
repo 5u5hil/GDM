@@ -91,28 +91,26 @@
         <script src="js/classie.js"></script>
         <script src="js/sidebarEffects.js"></script>
         <script>
-                                        $(document).ready(function() {  
-                                            var owl =  $(".youtubeGallery2").owlCarousel({
+                                        $(document).ready(function() {
+                                            var owl = $(".youtubeGallery").owlCarousel({
                                                 navigation: false, // Show next and prev buttons
                                                 slideSpeed: 300,
                                                 paginationSpeed: 400,
-                                                singleItem: true
+                                                singleItem: true,
+                                                touchDrag: true,
+                                                responsive: true,
+                                                responsiveRefreshRate: 200,
+                                                responsiveBaseWidth: window
                                             });
+
+
                                             $.ajax({
                                                 url: "http://www.gooddeedmarathon.com/getYoutubeVideo.php",
                                                 success: function(data) {
-                                                    $(".youtubeGallery .mCSB_container").html(data); //load new content inside .mCSB_container
-                                                    $(".youtubeGallery").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
-                                                    $(".youtubeGallery").mCustomScrollbar("scrollTo", "top", {scrollInertia: 200}); //scroll to top
+                                                    owl.data('owlCarousel').addItem(data, 0);
                                                 }
                                             });
-                                            $.ajax({
-                                                url: "http://www.gooddeedmarathon.com/getYoutubeVideo.php",
-                                                success: function(data) {
-                                                     owl.data('owlCarousel').addItem(data,0);
-                                                }
-                                            });
-                                        
+
 
                                             $(".youtubeGallery").mCustomScrollbar({
                                                 contentTouchScroll: true,
