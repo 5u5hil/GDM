@@ -92,9 +92,10 @@
                             <div id="uploadToolSubmit" class="submitDiv">
                                 <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
                                     <img id="uploadimg" src="images/pic.jpg" style="display: none;width:80%;margin-bottom: 20px;" />
-                                    <video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="" preload="meta">
-                                        <source src="">
-                                    </video> 
+
+                                    <span id="blah">
+
+                                    </span>
                                     <button id="playClick">aabc</button>
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
@@ -192,15 +193,21 @@
                     $("#uploadToolSubmit").show();
                 } else {
                     $("#uploadimg").hide();
-                    $("#uploadToolSubmit").show();
-                    $("#uploadvideo").show();
+                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls><source src="' + mediaFiles.fullPath + '"></video>');
+
 
 
                     var myVid = document.getElementById("uploadvideo");
-                    myVid.src = mediaFiles.fullPath;
+                    var duration = Math.round(myVid.duration);
+                    alert(duration);
+                    if (duration > 15) {
+                        alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
 
-                    myVid.load();
-                    alert(Math.round(myVid.duration));
+                    } else {
+                        $("#uploadToolSubmit").show();
+                        $("#uploadvideo").show();
+                    }
+
 
 
 //                    $("#uploadvideo")[0].play();
