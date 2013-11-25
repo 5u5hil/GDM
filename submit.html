@@ -191,7 +191,7 @@
                     $("#uploadToolSubmit").show();
                 } else {
                     $("#uploadimg").hide();
-                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls><source src="' + mediaFiles.fullPath + '"></video>');
+                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay=""><source src="' + mediaMain + '"></video>');
 
 
                     setTimeout(function() {
@@ -206,12 +206,6 @@
                             $("#uploadvideo").show();
                         }
                     }, 100);
-
-
-
-//                    $("#uploadvideo")[0].play();
-
-
 
                 }
 
