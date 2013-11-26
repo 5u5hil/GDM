@@ -47,14 +47,14 @@
                                 Share your good deed with the world!
                                 Inspire your friends to do good.
                             </p>
-                            <a href="#"><img src="images/ty-spread-the-love.png" /></a>
+                            <a href="#"><img style="width: 50%" src="images/ty-spread-the-love.png" /></a>
                             <p>
                                 Keep this chain going.
                                 And don't forget, we're going to reward
                                 the most heartwarming deeds everyday!
                             </p>
 
-                            <p id="sbtcnt">
+                            <p id="sbtcnt" class="color-green">
 
                             </p>
                             <a href="thankyou.html" onclick="window.plugins.socialsharing.share('I\'m all set to make Mumbai a shiny happy place. Want to join in? Register for the Good Deed Marathon here! ', null, null, window.localStorage.getItem('thankYouShareUrl'))"><img src="images/next.jpg" /></a>
@@ -73,13 +73,14 @@
                                 var thankYouShareUrl = window.localStorage.getItem("thankYouShareUrl");
                                 $(document).ready(function() {
 
-
+                                    $(".pp").attr("src", "http://www.facebook.com/" + id + "/picture");
+                                    $(".name").html(name);
                                     if (submitType == "Image") {
                                         var cont = submitContent.split("|||||");
-                                        $("#sbtcnt").html(cont[1] + "<br /><img src='" + cont[0] + "'/>");
+                                        $("#sbtcnt").html(cont[1] + "<br /><img style='width:80%' src='" + cont[0] + "'/>");
                                     } else if (submitType == "Video") {
                                         var cont = submitContent.split("|||||");
-                                        $("#sbtcnt").html(cont[1] + "<br /><video controls='' autoplay=''><source src='" + cont[0] + "'></video>");
+                                        $("#sbtcnt").html(cont[1] + "<br /><video style='width:80%' controls='' autoplay=''><source src='" + cont[0] + "'></video>");
                                     } else {
                                         $("#sbtcnt").html(submitContent);
                                     }

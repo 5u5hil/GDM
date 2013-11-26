@@ -211,7 +211,7 @@
                 params.prof_id = window.localStorage.getItem("id");
                 params.msg = msg;
                 options.params = params;
-                options.chunkedMode = true;
+                options.chunkedMode = false;
                 var ft = new FileTransfer();
                 var url = "http://www.gooddeedmarathon.com/upload.php";
 
@@ -241,16 +241,14 @@
                 options.fileKey = "file";
                 var prof_id = window.localStorage.getItem("id");
                 var msg = $("#videoToolSubmit textarea").val();
-                var imagefilename = prof_id + "_" + Number(new Date()) + ".mp4";
-                options.fileName = imagefilename;
-                options.mimeType = "video/mp4";
+              
 
                 var params = new Object();
                 params.videoURI = videoURI;
                 params.prof_id = window.localStorage.getItem("id");
                 params.msg = msg;
                 options.params = params;
-                options.chunkedMode = true;
+                options.chunkedMode = false;
                 var ft = new FileTransfer();
                 var url = "http://www.gooddeedmarathon.com/upload.php";
 
@@ -287,7 +285,7 @@
                 params.prof_id = window.localStorage.getItem("id");
                 params.msg = msg;
                 options.params = params;
-                options.chunkedMode = true;
+                options.chunkedMode = false;
                 var ft = new FileTransfer();
                 var url = "http://www.gooddeedmarathon.com/upload.php";
 
