@@ -192,8 +192,14 @@
                 } else {
                     $("#uploadimg").hide();
                     $("#uploadToolSubmit").show();
-                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="autoplay" preload="auto"><source src="http://www.w3schools.com/html/movie.mp4"></video>');
-
+                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="" autobuffer preload="auto"><source src="'+mediaMain+'"></video>');
+                    mediaMain.getFormatData(function(data) {
+                        alert(JSON.stringify(data));
+                        alert(data.duration);
+                        if (data.duration > 15) {
+                           alert("Your video is longer than the allowed 30 seconds. Please record a new video. You can trim your video after it's been recorded.")
+                        }
+                    });
 
                     setTimeout(function() {
                         var myVid = document.getElementById("uploadvideo");
