@@ -358,3 +358,7 @@ hr
     margin: 0;
     text-align: left;
 }
+
+.errorBorder{
+    border: 1px solid #69be28 !important;
+}

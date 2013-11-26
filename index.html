@@ -56,7 +56,7 @@
                                     </p>
                                     <img src="images/fb_login.png" width="206" height="49" onclick="login();" />
                                 </div>
-                                  <div style="height: 30px;"></div>
+                                <div style="height: 30px;"></div>
                                 <div class='youtubeGallery' style="width: 300px; height: 225px; margin: 0 auto;">
                                 </div>
 
@@ -68,6 +68,7 @@
                                     and see Mumbai dazzle!
                                 </p>
                                 <form id="formm">
+                                    <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
                                     <input type="text" placeholder="Full Name*" name="name" id="name" class="text" />
                                     <input type="email" placeholder="Email ID*" name="email" id="email" class="text" />
                                     <input type="hidden" name="dob" id="dob" class="text" />
@@ -89,6 +90,7 @@
         <script src="js/classie.js"></script>
         <script src="js/sidebarEffects.js"></script>
         <script>
+                                        var error = 0;
                                         $(document).ready(function() {
                                             var owl = $(".youtubeGallery").owlCarousel({
                                                 navigation: false, // Show next and prev buttons
@@ -107,23 +109,35 @@
                                                 }
                                             });
 
-                                           
+
                                             $("#submitie").click(function(e) {
+                                                error = 0;
                                                 e.preventDefault();
-                                                $.ajax({
-                                                    url: "http://www.gooddeedmarathon.com/submitAndroid.php",
-                                                    type: "POST",
-                                                    data: $("#formm").serialize(),
-                                                    success: function(data) {
-                                                        var cont = data.split("==");
-                                                        window.localStorage.setItem("city", cont[0]);
-                                                        window.localStorage.setItem("state", cont[1]);
-                                                        window.localStorage.setItem("phone", cont[2]);
-                                                        window.localStorage.setItem("pin", cont[3]);
-                                                        window.localStorage.setItem("address", cont[4]);
-                                                        window.location.href = "thank-you.html";
+                                                $(".errorMSG").hide();
+                                                $(".text").removeClass("errorBorder");
+                                                $(".text").each(function() {
+                                                    if ($(this).val() == "") {
+                                                        $(this).addClass("errorBorder");
+                                                        error = 1;
+                                                        $(".errorMSG").show();
                                                     }
                                                 });
+                                                if (error == 0) {
+                                                    $.ajax({
+                                                        url: "http://www.gooddeedmarathon.com/submitAndroid.php",
+                                                        type: "POST",
+                                                        data: $("#formm").serialize(),
+                                                        success: function(data) {
+                                                            var cont = data.split("==");
+                                                            window.localStorage.setItem("city", cont[0]);
+                                                            window.localStorage.setItem("state", cont[1]);
+                                                            window.localStorage.setItem("phone", cont[2]);
+                                                            window.localStorage.setItem("pin", cont[3]);
+                                                            window.localStorage.setItem("address", cont[4]);
+                                                            window.location.href = "thank-you.html";
+                                                        }
+                                                    });
+                                                }
                                             });
 
                                         });
