@@ -181,7 +181,7 @@
             }
 
             function onURINext(mediaFiles) {
-
+                alert(mediaFiles);
 
                 if (/jpg/i.test(mediaFiles.fullPath) || /png/i.test(mediaFiles.fullPath)) {
                     $("#uploadvideo").hide();
@@ -191,11 +191,13 @@
                     $("#uploadToolSubmit").show();
                 } else {
                     $("#uploadimg").hide();
-                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay=""><source src="' + mediaMain + '"></video>');
+                    $("#uploadToolSubmit").show();
+                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="autoplay" preload="auto"><source src="' + mediaMain + '"></video>');
 
 
                     setTimeout(function() {
                         var myVid = document.getElementById("uploadvideo");
+                        myVid.pause();
                         var duration = Math.round(myVid.duration);
                         alert(duration);
                         if (duration > 15) {
@@ -205,7 +207,7 @@
                             $("#uploadToolSubmit").show();
                             $("#uploadvideo").show();
                         }
-                    }, 100);
+                    }, 2000);
 
                 }
 
