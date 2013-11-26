@@ -91,10 +91,7 @@
 
                             <div id="uploadToolSubmit" class="submitDiv">
                                 <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
-                                    <img id="uploadimg" src="images/pic.jpg" style="display: none;width:80%;margin-bottom: 20px;" />
-                                    <span id="blah">
-
-                                    </span>
+                                    <img id="uploadimg" src="" style="display: none;width:80%;margin-bottom: 20px;" />
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input id="uploadSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
@@ -127,7 +124,6 @@
                 destinationType = navigator.camera.DestinationType;
                 mediaType = navigator.camera.MediaType;
             }
-
 
             function capturePhoto() {
                 navigator.camera.getPicture(onPhotoURISuccess, onFail, {
@@ -176,46 +172,12 @@
 
             function onURISuccess(mediaFiles) {
                 mediaMain = mediaFiles;
-                window.resolveLocalFileSystemURI(mediaFiles, onURINext, fail);
+                $("#uploadvideo").hide();
+                var largeImage = document.getElementById('uploadimg');
+                largeImage.style.display = 'block';
+                largeImage.src = mediaMain;
+                $("#uploadToolSubmit").show();
 
-            }
-
-            function onURINext(mediaFiles) {
-                alert(mediaFiles);
-
-                if (/jpg/i.test(mediaFiles.fullPath) || /png/i.test(mediaFiles.fullPath)) {
-                    $("#uploadvideo").hide();
-                    var largeImage = document.getElementById('uploadimg');
-                    largeImage.style.display = 'block';
-                    largeImage.src = mediaMain;
-                    $("#uploadToolSubmit").show();
-                } else {
-                    $("#uploadimg").hide();
-                    $("#uploadToolSubmit").show();
-                    $("#blah").html('<video id="uploadvideo" style="width:80%;margin-bottom: 20px;" controls="" autoplay="" autobuffer preload="auto"><source src="'+mediaMain+'"></video>');
-                    mediaMain.getFormatData(function(data) {
-                        alert(JSON.stringify(data));
-                        alert(data.duration);
-                        if (data.duration > 15) {
-                           alert("Your video is longer than the allowed 30 seconds. Please record a new video. You can trim your video after it's been recorded.")
-                        }
-                    });
-
-                    setTimeout(function() {
-                        var myVid = document.getElementById("uploadvideo");
-                        myVid.pause();
-                        var duration = Math.round(myVid.duration);
-                        alert(duration);
-                        if (duration > 15) {
-                            alert("Your video is longer than the allowed 15 seconds. Please record a new video. You can trim your video after it's been recorded.");
-
-                        } else {
-                            $("#uploadToolSubmit").show();
-                            $("#uploadvideo").show();
-                        }
-                    }, 2000);
-
-                }
 
             }
 
@@ -460,12 +422,7 @@
 
                 $("#uploadSubmitButton").click(function(e) {
                     e.preventDefault();
-                    if ($("#uploadimg").css("display") != "none") {
-                        uploadImgLib($("#uploadimg").attr("src"));
-                    } else {
-                        uploadVideoLib($("#uploadvideo")[0].src);
-                    }
-
+                    uploadImgLib($("#uploadimg").attr("src"));
                 });
             });
 
