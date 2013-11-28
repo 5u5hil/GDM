@@ -42,8 +42,8 @@
                         </header>
                         <div id="home" class="content center-align">
                             <p class="color-blue">
-                                Share your good deeds with everyone so they know how awesome you are! <br />
-                                Tell us about them in any way you want.
+                                Share your good deeds with everyone,<br /> so they know how awesome you are! 
+                                <br /> Tell us about them in any way you want.
                             </p>
 
                             <div class="submitModes">
@@ -60,7 +60,9 @@
                                     <img src="images/ty-gallery-icon.png" />
                                 </p>
                             </div>
-
+                            
+                            <div id="status" class="color-green"></div>
+                            
                             <div id="textToolSubmit" class="submitDiv">
                                 <form class="textToolSubmitForm" action="" method="post" >
                                     <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
@@ -102,7 +104,7 @@
                                 </form>
                             </div>
 
-                            <div id="status" class="color-green"></div>
+
                         </div><!--home ends here-->
                     </div><!--st-content-inner ends here-->
                 </div><!--.st-content ends here-->
@@ -233,7 +235,7 @@
 
                 var options = new FileUploadOptions();
                 options.fileKey = "file";
-                var prof_id = window.localStorage.getItem("id");
+
                 var msg = $("#videoToolSubmit textarea").val();
 
 
@@ -383,7 +385,7 @@
                             type: "POST",
                             success: function(data) {
                                 submitType = "text";
-                                submitContent = $("#textSubmitButton textarea").val();
+                                submitContent = $("#textToolSubmit textarea").val();
                                 thankYouShareUrl = data;
                                 thankyou(submitType, submitContent, thankYouShareUrl);
                             }
