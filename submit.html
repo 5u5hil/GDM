@@ -63,7 +63,8 @@
 
                             <div id="textToolSubmit" class="submitDiv">
                                 <form class="textToolSubmitForm" action="" method="post" >
-                                    <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
+                                    <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
+                                    <textarea name="textsubmit" maxlength="140" class="color-green"></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input type="image" class="textSubmitButton" src="images/submit.jpg" style="margin-top: 20px;" />                             
                                 </form>
@@ -72,6 +73,7 @@
                             <div id="photoToolSubmit" class="submitDiv">
                                 <form class="photoToolSubmitForm" method="post" enctype="multipart/form-data">
                                     <img id="photosubmit" src="images/pic.jpg" style="width:80%;margin-bottom: 20px;" />
+                                    <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input type="image" id="photoSubmitButton" src="images/submit.jpg" style="margin-top: 20px;" />                             
@@ -83,6 +85,7 @@
                                     <video id="videosubmit" style="width:80%;margin-bottom: 20px;" controls="" autoplay="">
                                         <source src="">
                                     </video> 
+                                    <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input id="videoSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
@@ -92,6 +95,7 @@
                             <div id="uploadToolSubmit" class="submitDiv">
                                 <form class="uploadToolSubmitForm" method="post" enctype="multipart/form-data">
                                     <img id="uploadimg" src="" style="display: none;width:80%;margin-bottom: 20px;" />
+                                    <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
                                     <textarea name="textsubmit" maxlength="140" class="color-green" required></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
                                     <input id="uploadSubmitButton" type="image" src="images/submit.jpg" style="margin-top: 20px;" />                             
@@ -241,7 +245,7 @@
                 options.fileKey = "file";
                 var prof_id = window.localStorage.getItem("id");
                 var msg = $("#videoToolSubmit textarea").val();
-              
+
 
                 var params = new Object();
                 params.videoURI = videoURI;
@@ -381,6 +385,8 @@
                 });
                 $("#textSubmitButton").click(function(e) {
                     e.preventDefault();
+                    $(".errorMSG").hide();
+                    $("#textToolSubmit textarea").removeClass("errorBorder");
                     if ($("#textSubmitButton textarea").val() !== "") {
                         $.ajax({
                             url: "http://www.gooddeedmarathon.com/upload.php",
@@ -393,22 +399,47 @@
                                 thankyou(submitType, submitContent, thankYouShareUrl);
                             }
                         });
+                    } else {
+                        $("#textToolSubmit .errorMSG").show();
+                        $("#textToolSubmit textarea").addClass("errorBorder");
                     }
                 });
 
                 $("#photoSubmitButton").click(function(e) {
                     e.preventDefault();
-                    upload($("#photosubmit").attr("src"));
+                    $(".errorMSG").hide();
+                    $("#photoToolSubmit textarea").removeClass("errorBorder");
+                    if ($("#textSubmitButton textarea").val() !== "") {
+                        upload($("#photosubmit").attr("src"));
+                    } else {
+                        $("#photoToolSubmit .errorMSG").show();
+                        $("#photoToolSubmit textarea").addClass("errorBorder");
+                    }
                 });
 
                 $("#videoSubmitButton").click(function(e) {
                     e.preventDefault();
-                    uploadVideo($("#videosubmit")[0].src);
+                    $(".errorMSG").hide();
+                    $("#videoToolSubmit textarea").removeClass("errorBorder");
+                    if ($("#textSubmitButton textarea").val() !== "") {
+                        uploadVideo($("#videosubmit")[0].src);
+                    } else {
+                        $("#videoToolSubmit .errorMSG").show();
+                        $("#videoToolSubmit textarea").addClass("errorBorder");
+                    }
                 });
 
                 $("#uploadSubmitButton").click(function(e) {
                     e.preventDefault();
-                    uploadImgLib($("#uploadimg").attr("src"));
+                    e.preventDefault();
+                    $(".errorMSG").hide();
+                    $("#uploadToolSubmit textarea").removeClass("errorBorder");
+                    if ($("#uploadSubmitButton textarea").val() !== "") {
+                        uploadImgLib($("#uploadimg").attr("src"));
+                    } else {
+                        $("#uploadToolSubmit .errorMSG").show();
+                        $("#uploadToolSubmit textarea").addClass("errorBorder");
+                    }
                 });
             });
 

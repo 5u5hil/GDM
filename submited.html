@@ -43,11 +43,11 @@
                             <img src="images/info.jpg" class="pp" style="width: 30%" />
                             <p class="name color-blue"></p>
                             <p>
-                                Thank you for making Mumbai a better place.
-                                Share your good deed with the world!
-                                Inspire your friends to do good.
+                                Thank you for making Mumbai a better place.<br />
+                                Share your good deed with the world!<br />
+                                Inspire your friends to do good.<br />
                             </p>
-                            <a href="#"><img style="width: 50%" src="images/ty-spread-the-love.png" /></a>
+                            <a href="thankyou.html" onclick="window.plugins.socialsharing.share('I\'m all set to make Mumbai a shiny happy place. Want to join in? Register for the Good Deed Marathon here! ', null, null, window.localStorage.getItem('thankYouShareUrl'))"><img style="width: 50%" src="images/ty-spread-the-love.png" /></a>
                             <p>
                                 Keep this chain going.
                                 And don't forget, we're going to reward
@@ -57,7 +57,7 @@
                             <p id="sbtcnt" class="color-green">
 
                             </p>
-                            <a href="thankyou.html" onclick="window.plugins.socialsharing.share('I\'m all set to make Mumbai a shiny happy place. Want to join in? Register for the Good Deed Marathon here! ', null, null, window.localStorage.getItem('thankYouShareUrl'))"><img src="images/next.jpg" /></a>
+
                         </div><!--home ends here-->
                     </div><!--st-content-inner ends here-->
                 </div><!--.st-content ends here-->
@@ -73,14 +73,14 @@
                                 var thankYouShareUrl = window.localStorage.getItem("thankYouShareUrl");
                                 $(document).ready(function() {
 
-                                    $(".pp").attr("src", "http://www.facebook.com/" + id + "/picture");
+                                    $(".pp").attr("src", "http://graph.facebook.com/" + id + "/picture");
                                     $(".name").html(name);
                                     if (submitType == "Image") {
                                         var cont = submitContent.split("|||||");
-                                        $("#sbtcnt").html(cont[1] + "<br /><img style='width:80%' src='" + cont[0] + "'/>");
+                                        $("#sbtcnt").html("<img style='width:80%' src='" + cont[0] + "'/><br /><br />" + cont[1]);
                                     } else if (submitType == "Video") {
                                         var cont = submitContent.split("|||||");
-                                        $("#sbtcnt").html(cont[1] + "<br /><video style='width:80%' controls='' autoplay=''><source src='" + cont[0] + "'></video>");
+                                        $("#sbtcnt").html("<video style='width:80%' controls='' autoplay=''><source src='" + cont[0] + "'></video><br /><br />" + cont[1]);
                                     } else {
                                         $("#sbtcnt").html(submitContent);
                                     }
