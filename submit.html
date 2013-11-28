@@ -66,7 +66,7 @@
                                     <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
                                     <textarea name="textsubmit" maxlength="140" class="color-green"></textarea>
                                     <p class="color-blue"><span class="limit">140</span> Characters</p>
-                                    <input type="image" class="textSubmitButton" src="images/submit.jpg" style="margin-top: 20px;" />                             
+                                    <input type="image" id="textSubmitButton" src="images/submit.jpg" style="margin-top: 20px;" />                             
                                 </form>
                             </div>
 
@@ -145,8 +145,7 @@
             }
 
             function captureError(error) {
-                var msg = 'An error occurred during capture: ' + error.code;
-                navigator.notification.alert(msg, null, 'Uh oh!');
+                $(".submitDiv").hide();
             }
 
             function getPhoto(source) {
@@ -186,17 +185,8 @@
 
             }
 
-            function onSuccess() {
-                console.log("playAudio():Audio Success");
-            }
-
-            function onSuccess(error) {
-                alert('code: ' + error.code + '\n' +
-                        'message: ' + error.message + '\n');
-            }
-
             function onFail(message) {
-                alert('Failed because: ' + message);
+                $(".submitDiv").hide();
             }
 
             function upload(imageURI) {
@@ -314,12 +304,11 @@
                 thankYouShareUrl = r.response;
                 thankyou(submitType, submitContent, thankYouShareUrl);
                 $("#status").hide();
-                alert(JSON.stringify(r));
-                alert("Image uploaded successfully!!");
+
             }
 
             function fail(error) {
-                alert(error);
+                $(".submitDiv").hide();
             }
 
             $(document).ready(function() {
@@ -387,7 +376,7 @@
                     e.preventDefault();
                     $(".errorMSG").hide();
                     $("#textToolSubmit textarea").removeClass("errorBorder");
-                    if ($("#textSubmitButton textarea").val() !== "") {
+                    if ($("#textToolSubmit textarea").val() !== "") {
                         $.ajax({
                             url: "http://www.gooddeedmarathon.com/upload.php",
                             data: {msg: $("#textSubmitButton textarea").val(), prof_id: window.localStorage.getItem("id")},
@@ -409,7 +398,7 @@
                     e.preventDefault();
                     $(".errorMSG").hide();
                     $("#photoToolSubmit textarea").removeClass("errorBorder");
-                    if ($("#textSubmitButton textarea").val() !== "") {
+                    if ($("#photoToolSubmit textarea").val() !== "") {
                         upload($("#photosubmit").attr("src"));
                     } else {
                         $("#photoToolSubmit .errorMSG").show();
@@ -421,7 +410,7 @@
                     e.preventDefault();
                     $(".errorMSG").hide();
                     $("#videoToolSubmit textarea").removeClass("errorBorder");
-                    if ($("#textSubmitButton textarea").val() !== "") {
+                    if ($("#videoToolSubmit textarea").val() !== "") {
                         uploadVideo($("#videosubmit")[0].src);
                     } else {
                         $("#videoToolSubmit .errorMSG").show();
@@ -431,10 +420,9 @@
 
                 $("#uploadSubmitButton").click(function(e) {
                     e.preventDefault();
-                    e.preventDefault();
                     $(".errorMSG").hide();
                     $("#uploadToolSubmit textarea").removeClass("errorBorder");
-                    if ($("#uploadSubmitButton textarea").val() !== "") {
+                    if ($("#uploadToolSubmit textarea").val() !== "") {
                         uploadImgLib($("#uploadimg").attr("src"));
                     } else {
                         $("#uploadToolSubmit .errorMSG").show();
