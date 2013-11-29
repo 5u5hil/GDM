@@ -217,7 +217,7 @@ body,
 
 /*custom style starts here*/
 body {
-    background-color: #000000;
+    background: url("images/bg.jpg");
 }
 
 

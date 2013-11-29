@@ -23,7 +23,11 @@
         <param name="APP_NAME" value="Good Deed Marathon" />
     </gap:plugin>
     <gap:plugin name="nl.x-services.plugins.socialsharing" version="2.3" />
-    <gap:splash src="splash.png" />
+    
+    <gap:splash src="splash/ldpi.png" gap:platform="android" gap:density="ldpi" />
+    <gap:splash src="splash/mdpi.png" gap:platform="android" gap:density="mdpi" />
+    <gap:splash src="splash/hdpi.png" gap:platform="android" gap:density="hdpi" />
+    <gap:splash src="splash/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
     
     <icon src="icon.png" />
     
