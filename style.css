@@ -20,7 +20,7 @@ body,
 
 .st-content {
     overflow-y: scroll;
-    background: #000000;
+    background: url("images/pattern.png");
 }
 
 .st-content,
@@ -217,7 +217,7 @@ body,
 
 /*custom style starts here*/
 body {
-    background: url("images/bg.jpg");
+    background: url("images/pattern.png");
 }
 
 
