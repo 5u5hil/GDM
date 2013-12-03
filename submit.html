@@ -60,9 +60,9 @@
                                     <img src="images/ty-gallery-icon.png" />
                                 </p>
                             </div>
-                          
+
                             <div id="status" class="color-green" style="text-align: center;"></div> <br /><br />
-                            
+
                             <div id="textToolSubmit" class="submitDiv">
                                 <form class="textToolSubmitForm" action="" method="post" >
                                     <p class="color-green errorMSG" style="display:none;font-size: 10px;text-align: right;">Oops! Please check your details again.</p>
@@ -314,6 +314,12 @@
             }
 
             $(document).ready(function() {
+
+                if (window.localStorage.getItem("city") != null && window.localStorage.getItem("state") != null && window.localStorage.getItem("phone") != null && window.localStorage.getItem("pin") != null && window.localStorage.getItem("address") != null && window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null) {
+                    alert("Please Register before submitting Good Deed!");
+                    window.location.href = "index.html";
+                }
+
                 $("#playClick").click(function() {
                     $("#uploadvideo")[0].play();
                 });
