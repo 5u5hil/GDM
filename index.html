@@ -117,35 +117,6 @@
                                             });
 
 
-                                            $("#submitie").click(function(e) {
-                                                error = 0;
-                                                e.preventDefault();
-                                                $(".errorMSG").hide();
-                                                $(".text").removeClass("errorBorder");
-                                                $(".text").each(function() {
-                                                    if ($(this).val() == "") {
-                                                        $(this).addClass("errorBorder");
-                                                        error = 1;
-                                                        $(".errorMSG").show();
-                                                    }
-                                                });
-                                                if (error == 0) {
-                                                    $.ajax({
-                                                        url: "http://www.gooddeedmarathon.com/submitAndroid.php",
-                                                        type: "POST",
-                                                        data: $("#formm").serialize(),
-                                                        success: function(data) {
-                                                            var cont = data.split("==");
-                                                            window.localStorage.setItem("city", cont[0]);
-                                                            window.localStorage.setItem("state", cont[1]);
-                                                            window.localStorage.setItem("phone", cont[2]);
-                                                            window.localStorage.setItem("pin", cont[3]);
-                                                            window.localStorage.setItem("address", cont[4]);
-                                                            window.location.href = "thank-you.html";
-                                                        }
-                                                    });
-                                                }
-                                            });
 
                                         });
         </script>
@@ -181,9 +152,7 @@
                 } catch (e) {
                     //   alert(e);
                 }
-                if (window.localStorage.getItem("city") != null && window.localStorage.getItem("state") != null && window.localStorage.getItem("phone") != null && window.localStorage.getItem("pin") != null && window.localStorage.getItem("address") != null && window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null) {
-                    $("#logginn").hide();
-                } else if (window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null && window.localStorage.getItem("birthday") != null) {
+                if (window.localStorage.getItem("id") != null && window.localStorage.getItem("name") != null && window.localStorage.getItem("email") != null && window.localStorage.getItem("birthday") != null) {
                     switchie();
                 }
 
@@ -206,8 +175,8 @@
                 $("#gender").val(window.localStorage.getItem("gender"));
                 $("#logginn").hide();
                 $(".reg").hide();
-                $("#formie").show();
             }
+
             function  checkie() {
                 $.ajax({
                     url: "http://www.gooddeedmarathon.com/check.php",
@@ -217,13 +186,22 @@
 
                         if (data == 0) {
                             switchie();
+                            $.ajax({
+                                url: "http://www.gooddeedmarathon.com/submitAndroid.php",
+                                type: "POST",
+                                data: $("#formm").serialize(),
+                                success: function(data) {
+                                    var cont = data.split("==");
+                                    window.localStorage.setItem("city", cont[0]);
+                                    window.localStorage.setItem("state", cont[1]);
+                                    window.localStorage.setItem("phone", cont[2]);
+                                    window.localStorage.setItem("pin", cont[3]);
+                                    window.localStorage.setItem("address", cont[4]);
+                                    window.location.href = "thank-you.html";
+                                }
+                            });
                         } else {
-                            var cont = data.split("==");
-                            window.localStorage.setItem("city", cont[0]);
-                            window.localStorage.setItem("state", cont[1]);
-                            window.localStorage.setItem("phone", cont[2]);
-                            window.localStorage.setItem("pin", cont[3]);
-                            window.localStorage.setItem("address", cont[4]);
+
                             $("#logginn").hide();
                         }
                     }
